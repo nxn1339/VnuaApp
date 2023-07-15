@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:agriculture/Controller/DashboardController.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/View/Home/Home.dart';
-import 'package:agriculture/View/News/New.dart';
+import 'package:agriculture/View/News/NewAll.dart';
 import 'package:agriculture/View/Notify/Notify.dart';
 import 'package:agriculture/View/Profile/Profile.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +42,8 @@ class Dashboard extends StatelessWidget {
     switch (controller.nameRoute.value) {
       case "Home":
         return Home();
-      case "New":
-        return New();
+      case "NewAll":
+        return NewAll();
       case "Notify":
         return Notify();
       case "Profile":

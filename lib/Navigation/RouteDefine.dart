@@ -1,6 +1,6 @@
 import 'package:agriculture/View/Home/Dashboard.dart';
 import 'package:agriculture/View/Home/Home.dart';
-import 'package:agriculture/View/News/New.dart';
+import 'package:agriculture/View/News/NewAll.dart';
 import 'package:agriculture/View/Notify/Notify.dart';
 import 'package:agriculture/View/Profile/Profile.dart';
 
@@ -15,8 +15,8 @@ class RouteDefine {
         return Profile();
       case 'Dashboard':
         return Dashboard();
-      case 'New':
-        return New();
+      case 'NewAll':
+        return NewAll();
     }
   }
 }

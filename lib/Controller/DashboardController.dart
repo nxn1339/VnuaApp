@@ -16,7 +16,7 @@ class DashboardController extends GetxController {
       'tile': 'Trang chủ',
     },
     {
-      'page': "New",
+      'page': "NewAll",
       'screen': "",
       'icon': "assets/icons/calendar_tick_home.svg",
       'icon_active': "assets/icons/calendar_tick_active.svg",

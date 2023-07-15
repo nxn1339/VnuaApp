@@ -1,0 +1,106 @@
+import 'package:agriculture/Model/MDNew.dart' as obj;
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+
+class New extends StatelessWidget {
+  const New({
+    super.key,
+    required this.newObject,
+    required this.onTap,
+  });
+  final VoidCallback onTap;
+  final obj.MDNew newObject;
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaQueryData = MediaQuery.of(context);
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Color(0xFFE3EDF6), width: 1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Container(
+            width: mediaQueryData.size.width * 0.8,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 120,
+                      width: 120,
+                      child:
+                          Image.network('${newObject.img}', fit: BoxFit.cover,
+                              errorBuilder: (BuildContext context,
+                                  Object exception, StackTrace? stackTrace) {
+                        return Icon(
+                          Icons.question_mark_rounded,
+                          size: 70,
+                        );
+                      }),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            '${newObject.title}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: Color(0xFF0060AF)),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text('${newObject.content}',
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  color: Color(0xff2F3643))),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/clock.svg',
+                                width: 18,
+                                height: 18,
+                              ),
+                              SizedBox(width: 6,),
+                              Text(DateFormat('dd/MM/yyyy').format(
+                                  DateTime.parse(newObject.time.toString()))),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -1,8 +1,13 @@
+import 'package:agriculture/Components/New.dart';
+import 'package:agriculture/Controller/NewAllController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
-class New extends StatelessWidget {
-  const New({super.key});
+class NewAll extends StatelessWidget {
+  NewAll({super.key});
+  var delete = Get.delete<NewAllController>();
+  var controller = Get.put(NewAllController());
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +85,44 @@ class New extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Obx(
+              () => controller.isLoading.value
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : controller.listNew.length != 0
+                      ? Expanded(
+                          child: ListView.builder(
+                            itemCount: controller.listNew.length,
+                            itemBuilder: (context, index) {
+                              return New(
+                                newObject: controller.listNew[index],
+                                onTap: () {},
+                              );
+                            },
+                          ),
+                        )
+                      : Container(
+                          child: Center(
+                              child: Column(
+                            children: [
+                              Container(
+                                  height: 300,
+                                  width: 250,
+                                  child: SvgPicture.asset(
+                                      'assets/images/not_data.svg',fit: BoxFit.cover,),),
+                              Text(
+                                'Không có dữ liệu vui lòng thử lại sau !',textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w700),
+                              ),
+                            ],
+                          )),
+                        ),
             ),
           ],
         ),

@@ -7,9 +7,8 @@ import '../Utils/Utils.dart';
 
 class APICaller {
   static APICaller _apiCaller = APICaller();
-  final String BASE_URL = "https://master-mbm.m2w.vn/api/v1/";
-  final String BASE_URL_NEWS = "https://mobimedapi.hieuha.com/api/";
-  // final String BASE_URL_FILE = "https://swagger-econtract-v2.m2w.vn/api/";
+  final String BASE_URL = "https://64b1215d062767bc4825bd18.mockapi.io/api/v1/";
+  final _httpClient = http.Client();
 
   static APICaller getInstance() {
     if (_apiCaller == null) {
@@ -17,7 +16,6 @@ class APICaller {
     }
     return _apiCaller;
   }
-
 
   Future<dynamic> get(String endpoint, {dynamic body}) async {
     Map<String, String> requestHeaders = {
@@ -74,7 +72,6 @@ class APICaller {
     }
     return jsonDecode(response.body);
   }
-
 
   Future<dynamic> put(String endpoint, dynamic body) async {
     Map<String, String> requestHeaders = {
