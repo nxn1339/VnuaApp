@@ -38,15 +38,18 @@ class New extends StatelessWidget {
                     Container(
                       height: 120,
                       width: 120,
-                      child:
-                          Image.network('${newObject.img}', fit: BoxFit.cover,
-                              errorBuilder: (BuildContext context,
-                                  Object exception, StackTrace? stackTrace) {
-                        return Icon(
-                          Icons.question_mark_rounded,
-                          size: 70,
-                        );
-                      }),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        child:
+                            Image.network('${newObject.img}', fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                          return Icon(
+                            Icons.question_mark_rounded,
+                            size: 70,
+                          );
+                        }),
+                      ),
                     ),
                     SizedBox(
                       width: 10,
@@ -63,8 +66,8 @@ class New extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                                 color: Color(0xFF0060AF)),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(
                             height: 10,
@@ -79,16 +82,35 @@ class New extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          Row(
+                          Wrap(
+                            runSpacing: 10,
                             children: [
                               SvgPicture.asset(
                                 'assets/icons/clock.svg',
                                 width: 18,
                                 height: 18,
                               ),
-                              SizedBox(width: 6,),
-                              Text(DateFormat('dd/MM/yyyy').format(
-                                  DateTime.parse(newObject.time.toString()))),
+                              SizedBox(
+                                width: 6,
+                              ),
+                              Text(
+                                DateFormat('dd/MM/yyyy').format(
+                                    DateTime.parse(newObject.time.toString())),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                    color: Color(0xFF788A9B)),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '${NumberFormat('#,###').format(newObject.view)} lượt xem',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: Color(0xFF788A9B)),
+                              ),
                             ],
                           ),
                         ],

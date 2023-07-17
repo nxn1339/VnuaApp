@@ -14,8 +14,6 @@ class Splash extends StatelessWidget {
       SystemUiOverlayStyle(
         statusBarColor: Colors
             .transparent, // Đặt màu nền của thanh trạng thái thành trong suốt
-        statusBarIconBrightness: Brightness
-            .dark, // Đặt màu biểu tượng trên thanh trạng thái thành tối
       ),
     );
     Size size = MediaQuery.of(context).size;

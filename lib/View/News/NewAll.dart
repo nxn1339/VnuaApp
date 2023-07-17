@@ -1,5 +1,6 @@
 import 'package:agriculture/Components/New.dart';
 import 'package:agriculture/Controller/NewAllController.dart';
+import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -101,7 +102,11 @@ class NewAll extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return New(
                                 newObject: controller.listNew[index],
-                                onTap: () {},
+                                onTap: () {
+                                  Navigation.navigateTo(
+                                      page: 'NewDetail',
+                                      arguments: [controller.listNew[index]]);
+                                },
                               );
                             },
                           ),
@@ -111,12 +116,16 @@ class NewAll extends StatelessWidget {
                               child: Column(
                             children: [
                               Container(
-                                  height: 300,
-                                  width: 250,
-                                  child: SvgPicture.asset(
-                                      'assets/images/not_data.svg',fit: BoxFit.cover,),),
+                                height: 300,
+                                width: 250,
+                                child: SvgPicture.asset(
+                                  'assets/images/not_data.svg',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                               Text(
-                                'Không có dữ liệu vui lòng thử lại sau !',textAlign: TextAlign.center,
+                                'Không có dữ liệu vui lòng thử lại sau !',
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w700),
                               ),

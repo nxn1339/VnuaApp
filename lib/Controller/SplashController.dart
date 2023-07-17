@@ -7,6 +7,9 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Timer(const Duration (seconds:2),() => Navigation.navigateTo(page: 'Dashboard'),);
+    Timer(
+      const Duration(seconds: 2),
+      () => Navigation.navigateGetOffAll(page: 'Dashboard'),
+    );
   }
 }
