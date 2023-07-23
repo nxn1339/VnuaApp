@@ -32,4 +32,24 @@ class NewAllController extends GetxController {
       Utils.showSnackBar(title: 'Thông Báo', message: '$e');
     }
   }
+  void readNew(int index) async {
+    getList();
+    String view = ((int.parse(listNew[index].view.toString())) + 1).toString();
+    var body = {
+      "view": view,
+    };
+    try {
+      final data = await _httpClient.put(
+          Uri.parse(
+              '${APICaller.getInstance().BASE_URL}/New/${listNew[index].id}'),
+          body: body);
+      if (data.statusCode == 200) {
+        listNew[index].view =
+            (int.parse(listNew[index].view.toString()) + 1).toString();
+        listNew.refresh();
+      }
+    } catch (e) {
+      Utils.showSnackBar(title: 'Thông Báo', message: '$e');
+    }
+  }
 }

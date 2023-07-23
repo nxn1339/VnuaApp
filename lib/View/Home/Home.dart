@@ -1,6 +1,7 @@
 import 'package:agriculture/Components/New.dart';
 import 'package:agriculture/Controller/HomeController.dart';
 import 'package:agriculture/Model/MDSlide.dart';
+import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,6 +16,11 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller1 = TextEditingController(text: "");
+    String thisText = "";
+    int pinLength = 4;
+    bool hasError = false;
+    String errorMessage;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -159,7 +165,7 @@ class Home extends StatelessWidget {
                                 'Xem thêm',
                                 style: TextStyle(
                                     fontSize: 14,
-                                    color: Color(0xff33bbff),
+                                    color: Color(0xFF0060AF),
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
@@ -171,7 +177,7 @@ class Home extends StatelessWidget {
                       ),
                       Obx(
                         () => Container(
-                          height: size.height * 0.2,
+                          height: size.height * 0.21,
                           width: size.width,
                           child: Expanded(
                             child: ListView.builder(
@@ -180,7 +186,14 @@ class Home extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return New(
                                   newObject: controller.listNew[index],
-                                  onTap: () {},
+                                  onTap: () {
+                                    //tăng view
+                                    controller.readNew(index);
+                                    //chuyển sang màn chi tiết
+                                    Navigation.navigateTo(
+                                        page: 'NewDetail',
+                                        arguments: [controller.listNew[index]]);
+                                  },
                                 );
                               },
                             ),
@@ -209,7 +222,7 @@ class Home extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           SizedBox(
-            width: 8,
+            width: 12,
           ),
           Expanded(
             child: Column(

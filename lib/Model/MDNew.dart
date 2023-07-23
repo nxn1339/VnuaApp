@@ -3,10 +3,18 @@ class MDNew {
   String? content;
   String? img;
   String? time;
-  var view;
+  String? view;
+  String? keyWord;
   String? id;
 
-  MDNew({this.title, this.content, this.img, this.time, this.view, this.id});
+  MDNew(
+      {this.title,
+      this.content,
+      this.img,
+      this.time,
+      this.view,
+      this.keyWord,
+      this.id});
 
   MDNew.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -14,6 +22,7 @@ class MDNew {
     img = json['img'];
     time = json['time'];
     view = json['view'];
+    keyWord = json['key_word'];
     id = json['id'];
   }
 
@@ -24,6 +33,7 @@ class MDNew {
     data['img'] = this.img;
     data['time'] = this.time;
     data['view'] = this.view;
+    data['key_word'] = this.keyWord;
     data['id'] = this.id;
     return data;
   }

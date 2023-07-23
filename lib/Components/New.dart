@@ -60,19 +60,27 @@ class New extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Text(
-                            '${newObject.title}',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                color: Color(0xFF0060AF)),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 2),
+                            decoration: BoxDecoration(
+                                color: Color(0xffcceeff),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child: Text(
+                              '${newObject.keyWord}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                  color: Color(0xFF0060AF)),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           SizedBox(
                             height: 10,
                           ),
-                          Text('${newObject.content}',
+                          Text('${newObject.title}',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -105,7 +113,7 @@ class New extends StatelessWidget {
                                 width: 10,
                               ),
                               Text(
-                                '${NumberFormat('#,###').format(newObject.view)} lượt xem',
+                                '${isNumeric(newObject.view.toString()) == true ? NumberFormat('#,###').format(int.parse(newObject.view.toString())) : 'Đang cập nhật'} lượt xem',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 13,
@@ -124,5 +132,9 @@ class New extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool isNumeric(String str) {
+    return int.tryParse(str) != null || double.tryParse(str) != null;
   }
 }

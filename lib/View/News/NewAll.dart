@@ -103,6 +103,7 @@ class NewAll extends StatelessWidget {
                               return New(
                                 newObject: controller.listNew[index],
                                 onTap: () {
+                                  controller.readNew(index);
                                   Navigation.navigateTo(
                                       page: 'NewDetail',
                                       arguments: [controller.listNew[index]]);

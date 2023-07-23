@@ -30,30 +30,31 @@ class NewDetail extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                  decoration: BoxDecoration(
+                      color: Color(0xffcceeff),
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                  child: Text(
+                    '${controller.mdNew.value.keyWord}',
+                    style: TextStyle(
+                        color: Color(0xFF0060AF),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   '${controller.mdNew.value.title}',
                   style: TextStyle(
-                      color: Color(0xFF0060AF),
+                      color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
                   height: 12,
-                ),
-                Image.network('${controller.mdNew.value.img}',
-                    fit: BoxFit.cover, errorBuilder: (BuildContext context,
-                        Object exception, StackTrace? stackTrace) {
-                  return Icon(
-                    Icons.question_mark_rounded,
-                    size: 70,
-                  );
-                }),
-                SizedBox(
-                  height: 12,
-                ),
-                Text('${controller.mdNew.value.content}'),
-                SizedBox(
-                  height: 20,
                 ),
                 Wrap(
                   runSpacing: 10,
@@ -77,14 +78,34 @@ class NewDetail extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      '${NumberFormat('#,###').format(controller.mdNew.value.view)} lượt xem',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
-                          color: Color(0xFF788A9B)),
+                    Obx(
+                      () => Text(
+                        '${isNumeric(controller.mdNew.value.view.toString()) == true ? NumberFormat('#,###').format(int.parse((controller.mdNew.value.view.toString()))) : 'Đang cập nhật'} lượt xem',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                            color: Color(0xFF788A9B)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                   ],
+                ),
+                Image.network('${controller.mdNew.value.img}',
+                    fit: BoxFit.cover, errorBuilder: (BuildContext context,
+                        Object exception, StackTrace? stackTrace) {
+                  return Icon(
+                    Icons.question_mark_rounded,
+                    size: 70,
+                  );
+                }),
+                SizedBox(
+                  height: 12,
+                ),
+                Text('${controller.mdNew.value.content}'),
+                SizedBox(
+                  height: 20,
                 ),
               ],
             ),
@@ -92,5 +113,9 @@ class NewDetail extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool isNumeric(String str) {
+    return int.tryParse(str) != null || double.tryParse(str) != null;
   }
 }
