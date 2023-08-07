@@ -16,11 +16,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller1 = TextEditingController(text: "");
-    String thisText = "";
-    int pinLength = 4;
-    bool hasError = false;
-    String errorMessage;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -43,24 +38,24 @@ class Home extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Container(
+                      SizedBox(
                         height: 30,
                         child: Marquee(
                           text:
                               ' HỌC VIỆN NÔNG NGHIỆP VIỆT NAM - CƠ HỘI HỌC TẬP VÀ THÀNH ĐẠT',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                           scrollAxis: Axis.horizontal,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           blankSpace: 20.0,
                           velocity: 50.0,
-                          pauseAfterRound: Duration(seconds: 1),
+                          pauseAfterRound: const Duration(seconds: 1),
                           startPadding: 10.0,
-                          accelerationDuration: Duration(seconds: 1),
+                          accelerationDuration: const Duration(seconds: 1),
                           accelerationCurve: Curves.linear,
-                          decelerationDuration: Duration(milliseconds: 500),
+                          decelerationDuration: const Duration(milliseconds: 500),
                           decelerationCurve: Curves.easeOut,
                         ),
                       ),
@@ -80,7 +75,7 @@ class Home extends StatelessWidget {
                                           enlargeCenterPage: false,
                                           autoPlay: true,
                                           autoPlayInterval:
-                                              Duration(seconds: 3),
+                                              const Duration(seconds: 3),
                                           onPageChanged: (index, other) {
                                             controller.setActiveIndex(index);
                                           })),
@@ -91,7 +86,7 @@ class Home extends StatelessWidget {
                                         activeIndex:
                                             controller.activeIndex.value,
                                         count: controller.listSlide.length,
-                                        effect: ExpandingDotsEffect(
+                                        effect: const ExpandingDotsEffect(
                                           dotWidth: 8,
                                           dotHeight: 8,
                                           activeDotColor: Colors.white,
@@ -108,14 +103,14 @@ class Home extends StatelessWidget {
                             Expanded(
                                 child: _menu('assets/icons/loudspeaker.svg',
                                     'Tuyển sinh Đại học', Color(0xff53373A))),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Expanded(
                               child: _menu('assets/icons/student.svg',
                                   'Học bổng - Việc làm', Color(0xff006343)),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Expanded(
@@ -125,7 +120,7 @@ class Home extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Container(
@@ -140,7 +135,7 @@ class Home extends StatelessWidget {
                         height: 4,
                         color: Color(0xff533535),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Padding(
@@ -148,7 +143,7 @@ class Home extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Tin tức & sự kiện',
                               style: TextStyle(
                                   color: Color(0xff009B6B),
@@ -156,27 +151,32 @@ class Home extends StatelessWidget {
                                   fontWeight: FontWeight.w500),
                             ),
                             Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
                                   color: Color(0xffcceeff),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15))),
-                              child: Text(
-                                'Xem thêm',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF0060AF),
-                                    fontWeight: FontWeight.w500),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigation.navigateTo(page: 'NewAll');
+                                },
+                                child: const Text(
+                                  'Xem thêm',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xFF0060AF),
+                                      fontWeight: FontWeight.w500),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Obx(
-                        () => Container(
+                        () => SizedBox(
                           height: size.height * 0.21,
                           width: size.width,
                           child: Expanded(
@@ -188,11 +188,11 @@ class Home extends StatelessWidget {
                                   newObject: controller.listNew[index],
                                   onTap: () {
                                     //tăng view
-                                    controller.readNew(index);
+                                    // controller.readNew(index);
                                     //chuyển sang màn chi tiết
                                     Navigation.navigateTo(
                                         page: 'NewDetail',
-                                        arguments: [controller.listNew[index]]);
+                                        arguments: [controller.listNew[index].id]);
                                   },
                                 );
                               },
@@ -211,7 +211,7 @@ class Home extends StatelessWidget {
 
   _appBar(BuildContext context) {
     return Container(
-      color: Color(0xFF002D4A),
+      color: const Color(0xFF002D4A),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -221,7 +221,7 @@ class Home extends StatelessWidget {
             width: 50,
             fit: BoxFit.cover,
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
           Expanded(
@@ -230,7 +230,7 @@ class Home extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'HỌC VIỆN NÔNG NGHIỆP VIỆT NAM',
                   style: TextStyle(
                       color: Colors.white,
@@ -238,12 +238,12 @@ class Home extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                   overflow: TextOverflow.clip,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Text(
                   'Vietnam National\nUniversity of Agriculture'.toUpperCase(),
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 13,
                       fontWeight: FontWeight.w600),
@@ -260,8 +260,8 @@ class Home extends StatelessWidget {
   _menu(String icon, title, Color color) {
     return Container(
       decoration: BoxDecoration(
-          color: color, borderRadius: BorderRadius.all(Radius.circular(6))),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          color: color, borderRadius: const BorderRadius.all(Radius.circular(6))),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Row(
         children: [
           SvgPicture.asset(
@@ -270,13 +270,13 @@ class Home extends StatelessWidget {
             width: 24,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 3,
           ),
           Expanded(
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13,
                   fontWeight: FontWeight.w500),

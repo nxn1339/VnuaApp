@@ -28,7 +28,7 @@ class HomeController extends GetxController {
   void getSlide() async {
     try {
       final data = await _httpClient
-          .get(Uri.parse('${APICaller.getInstance().BASE_URL}/Slide'));
+          .get(Uri.parse('https://64b1215d062767bc4825bd18.mockapi.io/api/v1/Slide'));
       if (data.statusCode == 200) {
         final jsonData = jsonDecode(utf8.decode(data.bodyBytes));
         final List<MDSlide> list =
@@ -42,13 +42,13 @@ class HomeController extends GetxController {
 
   void getList() async {
     try {
-      final data = await _httpClient
-          .get(Uri.parse('${APICaller.getInstance().BASE_URL}/New'));
-      if (data.statusCode == 200) {
-        final jsonData = jsonDecode(utf8.decode(data.bodyBytes));
-        final List<MDNew> list =
-            (jsonData as List).map((e) => MDNew.fromJson(e)).take(10).toList();
-        listNew.value = list;
+      final data = await APICaller.getInstance().get('news');
+      if (data !=null) {
+        List<dynamic> list = data['data'];
+       var listItem =
+            list.map((dynamic json) => MDNew.fromJson(json)).toList();
+      listNew.addAll(listItem);
+
       }
     } catch (e) {
       Utils.showSnackBar(title: 'Thông Báo', message: '$e');
@@ -59,24 +59,24 @@ class HomeController extends GetxController {
     activeIndex.value = index;
   }
 
-  void readNew(int index) async {
-    getList();
-    String view = ((int.parse(listNew[index].view.toString())) + 1).toString();
-    var body = {
-      "view": view,
-    };
-    try {
-      final data = await _httpClient.put(
-          Uri.parse(
-              '${APICaller.getInstance().BASE_URL}/New/${listNew[index].id}'),
-          body: body);
-      if (data.statusCode == 200) {
-        listNew[index].view =
-            (int.parse(listNew[index].view.toString()) + 1).toString();
-        listNew.refresh();
-      }
-    } catch (e) {
-      Utils.showSnackBar(title: 'Thông Báo', message: '$e');
-    }
-  }
-}
+//   void readNew(int index) async {
+//     getList();
+//     String view = ((int.parse(listNew[index].view.toString())) + 1).toString();
+//     var body = {
+//       "view": view,
+//     };
+//     try {
+//       final data = await _httpClient.put(
+//           Uri.parse(
+//               '${APICaller.getInstance().BASE_URL}/New/${listNew[index].id}'),
+//           body: body);
+//       if (data.statusCode == 200) {
+//         listNew[index].view =
+//             (int.parse(listNew[index].view.toString()) + 1).toString();
+//         listNew.refresh();
+//       }
+//     } catch (e) {
+//       Utils.showSnackBar(title: 'Thông Báo', message: '$e');
+//     }
+//   }
+ }

@@ -18,7 +18,7 @@ class NewAll extends StatelessWidget {
           'Tin Tức',
           style: TextStyle(color: Colors.black),
         ),
-        automaticallyImplyLeading: false,
+        foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -106,7 +106,7 @@ class NewAll extends StatelessWidget {
                                   controller.readNew(index);
                                   Navigation.navigateTo(
                                       page: 'NewDetail',
-                                      arguments: [controller.listNew[index]]);
+                                      arguments: [controller.listNew[index].id]);
                                 },
                               );
                             },

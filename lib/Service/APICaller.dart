@@ -7,7 +7,8 @@ import '../Utils/Utils.dart';
 
 class APICaller {
   static APICaller _apiCaller = APICaller();
-  final String BASE_URL = "https://64b1215d062767bc4825bd18.mockapi.io/api/v1/";
+  final String BASE_URL = "http://192.168.50.165:3000/";
+  final String BASE_URL_IMAGE = "http://192.168.50.165:3000/images/";
   final _httpClient = http.Client();
 
   static APICaller getInstance() {
@@ -36,12 +37,12 @@ class APICaller {
       Utils.showSnackBar(title: 'Thông báo', message: response.body);
       return null;
     }
-    if (jsonDecode(response.body)['error']['code'] != 0) {
-      Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
-      return null;
-    }
+    // if (jsonDecode(response.body)['error']['code'] != 0) {
+    //   Utils.showSnackBar(
+    //       title: 'Thông báo',
+    //       message: jsonDecode(response.body)['error']['message']);
+    //   return null;
+    // }
     return jsonDecode(response.body);
   }
 

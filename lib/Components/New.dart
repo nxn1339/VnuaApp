@@ -1,4 +1,5 @@
 import 'package:agriculture/Model/MDNew.dart' as obj;
+import 'package:agriculture/Service/APICaller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -41,7 +42,7 @@ class New extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(6)),
                         child:
-                            Image.network('${newObject.img}', fit: BoxFit.cover,
+                            Image.network('${APICaller.getInstance().BASE_URL_IMAGE}${newObject.image}', fit: BoxFit.cover,
                                 errorBuilder: (BuildContext context,
                                     Object exception, StackTrace? stackTrace) {
                           return Icon(
@@ -68,7 +69,7 @@ class New extends StatelessWidget {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15))),
                             child: Text(
-                              '${newObject.keyWord}',
+                              '${newObject.title}',
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
@@ -80,7 +81,7 @@ class New extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          Text('${newObject.title}',
+                          Text('${newObject.description}',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -101,9 +102,9 @@ class New extends StatelessWidget {
                               SizedBox(
                                 width: 6,
                               ),
-                              Text(
+                             Text(
                                 DateFormat('dd/MM/yyyy').format(
-                                    DateTime.parse(newObject.time.toString())),
+                                    DateTime.parse(newObject.publishDate ?? DateTime.now().toString())),
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 12,
@@ -112,13 +113,13 @@ class New extends StatelessWidget {
                               SizedBox(
                                 width: 10,
                               ),
-                              Text(
-                                '${isNumeric(newObject.view.toString()) == true ? NumberFormat('#,###').format(int.parse(newObject.view.toString())) : 'Đang cập nhật'} lượt xem',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13,
-                                    color: Color(0xFF788A9B)),
-                              ),
+                              // Text(
+                              //   '${isNumeric(newObject.view.toString()) == true ? NumberFormat('#,###').format(int.parse(newObject.view.toString())) : 'Đang cập nhật'} lượt xem',
+                              //   style: TextStyle(
+                              //       fontWeight: FontWeight.w500,
+                              //       fontSize: 13,
+                              //       color: Color(0xFF788A9B)),
+                              // ),
                             ],
                           ),
                         ],
