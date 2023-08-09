@@ -1,8 +1,6 @@
 import 'package:agriculture/Model/MDNew.dart' as obj;
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
@@ -22,12 +20,12 @@ class New extends StatelessWidget {
       onTap: onTap,
       child: Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Color(0xFFE3EDF6), width: 1),
+          side: const BorderSide(color: Color(0xFFE3EDF6), width: 1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10),
-          child: Container(
+          child: SizedBox(
             width: mediaQueryData.size.width * 0.8,
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -36,23 +34,25 @@ class New extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       height: 120,
                       width: 120,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(6)),
-                        child:
-                            Image.network('${APICaller.getInstance().BASE_URL_IMAGE}${newObject.image}', fit: BoxFit.cover,
-                                errorBuilder: (BuildContext context,
-                                    Object exception, StackTrace? stackTrace) {
-                          return Icon(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(6)),
+                        child: Image.network(
+                            '${APICaller.getInstance().BASE_URL_IMAGE}${newObject.image}',
+                            fit: BoxFit.cover, errorBuilder:
+                                (BuildContext context, Object exception,
+                                    StackTrace? stackTrace) {
+                          return const Icon(
                             Icons.question_mark_rounded,
                             size: 70,
                           );
                         }),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
@@ -62,15 +62,15 @@ class New extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 2),
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color(0xffcceeff),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15))),
                             child: Text(
                               '${newObject.title}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                   color: Color(0xFF0060AF)),
@@ -78,17 +78,17 @@ class New extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text('${newObject.description}',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14,
                                   color: Color(0xff2F3643))),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Wrap(
@@ -99,18 +99,28 @@ class New extends StatelessWidget {
                                 width: 18,
                                 height: 18,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 6,
                               ),
-                             Text(
-                                DateFormat('dd/MM/yyyy').format(
-                                    DateTime.parse(newObject.publishDate ?? DateTime.now().toString())),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                    color: Color(0xFF788A9B)),
-                              ),
-                              SizedBox(
+                              newObject.publishDate != null
+                                  ? Text(
+                                      DateFormat('dd/MM/yyyy').format(
+                                          DateTime.parse(
+                                              newObject.publishDate ??
+                                                  DateTime.now().toString())),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Color(0xFF788A9B)),
+                                    )
+                                  : Text(
+                                      'Đang cập nhật',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Color(0xFF788A9B)),
+                                    ),
+                              const SizedBox(
                                 width: 10,
                               ),
                               // Text(
