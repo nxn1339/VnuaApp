@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class Notify extends StatelessWidget {
-  const Notify({super.key});
+class QuizzeDetail extends StatelessWidget {
+  const QuizzeDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Thông báo',
-          style: TextStyle(color: Colors.black),
+          Get.arguments['title'],
+          style: const TextStyle(color: Colors.black),
         ),
-        automaticallyImplyLeading: false,
+        foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
         child: Column(

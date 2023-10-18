@@ -55,7 +55,8 @@ class Home extends StatelessWidget {
                           startPadding: 10.0,
                           accelerationDuration: const Duration(seconds: 1),
                           accelerationCurve: Curves.linear,
-                          decelerationDuration: const Duration(milliseconds: 500),
+                          decelerationDuration:
+                              const Duration(milliseconds: 500),
                           decelerationCurve: Curves.easeOut,
                         ),
                       ),
@@ -98,26 +99,24 @@ class Home extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: _menu('assets/icons/loudspeaker.svg',
-                                    'Tuyển sinh Đại học', Color(0xff53373A))),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Expanded(
-                              child: _menu('assets/icons/student.svg',
+                        child: IntrinsicHeight(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _menu('assets/icons/loudspeaker.svg',
+                                  'Tuyển sinh Đại học', Color(0xff53373A)),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              _menu('assets/icons/student.svg',
                                   'Học bổng - Việc làm', Color(0xff006343)),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Expanded(
-                              child: _menu('assets/icons/study.svg',
-                                  'Kết quả nghiên cứu', Color(0xffFF9700)),
-                            )
-                          ],
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              _menu('assets/icons/study.svg',
+                                  'Kết quả nghiên cứu', Color(0xffFF9700))
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -143,12 +142,14 @@ class Home extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              'Tin tức & sự kiện',
-                              style: TextStyle(
-                                  color: Color(0xff009B6B),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500),
+                            Expanded(
+                              child: Text(
+                                'Tin tức & sự kiện',
+                                style: TextStyle(
+                                    color: Color(0xff009B6B),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(8),
@@ -192,7 +193,9 @@ class Home extends StatelessWidget {
                                     //chuyển sang màn chi tiết
                                     Navigation.navigateTo(
                                         page: 'NewDetail',
-                                        arguments: [controller.listNew[index].id]);
+                                        arguments: [
+                                          controller.listNew[index].id
+                                        ]);
                                   },
                                 );
                               },
@@ -258,32 +261,40 @@ class Home extends StatelessWidget {
   }
 
   _menu(String icon, title, Color color) {
-    return Container(
-      decoration: BoxDecoration(
-          color: color, borderRadius: const BorderRadius.all(Radius.circular(6))),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: Row(
-        children: [
-          SvgPicture.asset(
-            icon,
-            height: 24,
-            width: 24,
-            color: Colors.white,
-          ),
-          const SizedBox(
-            width: 3,
-          ),
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500),
-              overflow: TextOverflow.clip,
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+            color: color,
+            borderRadius: const BorderRadius.all(Radius.circular(6))),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              icon,
+              height: 24,
+              width: 24,
+              color: Colors.white,
             ),
-          ),
-        ],
+            const SizedBox(
+              width: 3,
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 50,
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500),
+                  overflow: TextOverflow.clip,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -3,8 +3,9 @@ import 'package:agriculture/Controller/DashboardController.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/View/Home/Home.dart';
 import 'package:agriculture/View/News/NewAll.dart';
-import 'package:agriculture/View/Notify/Notify.dart';
+import 'package:agriculture/View/Quizze/Quizze.dart';
 import 'package:agriculture/View/Profile/Profile.dart';
+import 'package:agriculture/View/Recruitment/Recruitment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
@@ -42,10 +43,10 @@ class Dashboard extends StatelessWidget {
     switch (controller.nameRoute.value) {
       case "Home":
         return Home();
-      case "NewAll":
-        return NewAll();
-      case "Notify":
-        return Notify();
+      case "Quizze":
+        return Quizze();
+      case "Recruitment":
+        return Recruitment();
       case "Profile":
         return Profile();
     }
@@ -78,10 +79,18 @@ class Dashboard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(page['page'] != null &&
-                              controller.nameRoute.value == page['page']
-                          ? page['icon_active']
-                          : page['icon']),
+                      SvgPicture.asset(
+                        page['page'] != null &&
+                                controller.nameRoute.value == page['page']
+                            ? page['icon_active']
+                            : page['icon'],
+                        height: 25,
+                        width: 25,
+                        color: page['page'] != null &&
+                                controller.nameRoute.value == page['page']
+                            ? Color(0xFF0060AF)
+                            : Color(0xFF6F767E),
+                      ),
                       const SizedBox(
                         height: 8,
                       ),
