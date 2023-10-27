@@ -28,7 +28,6 @@ class New extends StatelessWidget {
           child: SizedBox(
             width: mediaQueryData.size.width * 0.8,
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Row(
@@ -41,7 +40,7 @@ class New extends StatelessWidget {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(6)),
                         child: Image.network(
-                            '${APICaller.getInstance().BASE_URL_IMAGE}${newObject.image}',
+                            '${APICaller.getInstance().BASE_URL}${newObject.image}',
                             fit: BoxFit.cover, errorBuilder:
                                 (BuildContext context, Object exception,
                                     StackTrace? stackTrace) {
@@ -74,15 +73,13 @@ class New extends StatelessWidget {
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                   color: Color(0xFF0060AF)),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           Text('${newObject.description}',
-                              maxLines: 3,
+                              maxLines: 4,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -90,47 +87,6 @@ class New extends StatelessWidget {
                                   color: Color(0xff2F3643))),
                           const SizedBox(
                             height: 10,
-                          ),
-                          Wrap(
-                            runSpacing: 10,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/clock.svg',
-                                width: 18,
-                                height: 18,
-                              ),
-                              const SizedBox(
-                                width: 6,
-                              ),
-                              newObject.publishDate != null
-                                  ? Text(
-                                      DateFormat('dd/MM/yyyy').format(
-                                          DateTime.parse(
-                                              newObject.publishDate ??
-                                                  DateTime.now().toString())),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                          color: Color(0xFF788A9B)),
-                                    )
-                                  : Text(
-                                      'Đang cập nhật',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                          color: Color(0xFF788A9B)),
-                                    ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              // Text(
-                              //   '${isNumeric(newObject.view.toString()) == true ? NumberFormat('#,###').format(int.parse(newObject.view.toString())) : 'Đang cập nhật'} lượt xem',
-                              //   style: TextStyle(
-                              //       fontWeight: FontWeight.w500,
-                              //       fontSize: 13,
-                              //       color: Color(0xFF788A9B)),
-                              // ),
-                            ],
                           ),
                         ],
                       ),

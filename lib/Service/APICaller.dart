@@ -7,8 +7,7 @@ import '../Utils/Utils.dart';
 
 class APICaller {
   static APICaller _apiCaller = APICaller();
-  final String BASE_URL = "http://192.168.50.165:3000/";
-  final String BASE_URL_IMAGE = "http://192.168.50.165:3000/images/";
+  final String BASE_URL = "http://192.168.50.167:3000/";
   final _httpClient = http.Client();
 
   static APICaller getInstance() {

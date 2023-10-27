@@ -29,7 +29,7 @@ class Dashboard extends StatelessWidget {
       () => Scaffold(
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,
-        bottomNavigationBar: BottomNavigationBase(context),
+        bottomNavigationBar: bottomNavigationBase(context),
         body: Stack(
           children: <Widget>[
             pageDefine(),
@@ -53,7 +53,7 @@ class Dashboard extends StatelessWidget {
     return Home();
   }
 
-  Widget BottomNavigationBase(BuildContext context) {
+  Widget bottomNavigationBase(BuildContext context) {
     return Obx(() => (BottomAppBar(
           color: Colors.white,
           shape: const CircularNotchedRectangle(),
@@ -68,7 +68,6 @@ class Dashboard extends StatelessWidget {
                       page['page'] != controller.nameRoute.value &&
                       page['page'] != "") {
                     controller.nameRoute.value = page['page'];
-                    // Navigation.navigateTo(page: controller.nameRoute.value);
                   }
                 },
                 child: Container(

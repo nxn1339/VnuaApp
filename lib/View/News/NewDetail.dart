@@ -83,11 +83,11 @@ class NewDetail extends StatelessWidget {
                                   SizedBox(
                                     width: 6,
                                   ),
-                                  controller.mdNew.value.publishDate != null
+                                  controller.mdNew.value.createAt != null
                                       ? Text(
                                           DateFormat('dd/MM/yyyy').format(
-                                              DateTime.parse(controller.mdNew
-                                                      .value.publishDate ??
+                                              DateTime.parse(controller
+                                                      .mdNew.value.createAt ??
                                                   DateTime.now().toString())),
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
@@ -117,7 +117,7 @@ class NewDetail extends StatelessWidget {
                             height: 20,
                           ),
                           Image.network(
-                              '${APICaller.getInstance().BASE_URL_IMAGE}${controller.mdNew.value.image}',
+                              '${APICaller.getInstance().BASE_URL}${controller.mdNew.value.image}',
                               fit: BoxFit.cover, errorBuilder:
                                   (BuildContext context, Object exception,
                                       StackTrace? stackTrace) {
@@ -129,7 +129,7 @@ class NewDetail extends StatelessWidget {
                           SizedBox(
                             height: 12,
                           ),
-                          Html(data: controller.mdNew.value.content),
+                          // Html(data: controller.mdNew.value.content),
                           SizedBox(
                             height: 20,
                           ),
@@ -175,9 +175,9 @@ class NewDetail extends StatelessWidget {
                                         return New(
                                           newObject: controller.listNew[index],
                                           onTap: () {
-                                            controller.getNews(
-                                                controller.listNew[index].id ??
-                                                    1);
+                                            // controller.getNews(
+                                            //     controller.listNew[index].id ??
+                                            //         1);
                                             controller.scrollToTop();
                                           },
                                         );

@@ -1,48 +1,50 @@
 class MDNewDetail {
-  int? id;
+  String? id;
+  String? userId;
   String? title;
+  String? description;
   String? image;
   String? content;
-  String? description;
+  String? createAt;
+  String? updateAt;
   String? author;
-  String? publishDate;
-  String? createdAt;
-  String? updatedAt;
 
   MDNewDetail(
       {this.id,
+      this.userId,
       this.title,
+      this.description,
       this.image,
       this.content,
-      this.description,
-      this.author,
-      this.publishDate,
-      this.createdAt,
-      this.updatedAt});
+      this.createAt,
+      this.updateAt,
+      this.author});
 
-  MDNewDetail.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    image = json['image'];
-    content = json['content'];
-    description = json['description'];
-    author = json['author'];
-    publishDate = json['publish_date'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+  factory MDNewDetail.fromJson(Map<String, dynamic> json) {
+    return MDNewDetail(
+      id: json['id'],
+      userId: json['user_id'],
+      title: json['title'],
+      description: json['description'],
+      image: json['image'],
+      content: json['content'],
+      createAt: json['create_at'],
+      updateAt: json['update_at'],
+      author: json['author'],
+    );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['user_id'] = this.userId;
     data['title'] = this.title;
+    data['description'] = this.description;
     data['image'] = this.image;
     data['content'] = this.content;
-    data['description'] = this.description;
+    data['create_at'] = this.createAt;
+    data['update_at'] = this.updateAt;
     data['author'] = this.author;
-    data['publish_date'] = this.publishDate;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:agriculture/Model/MDNew.dart';
 import 'package:agriculture/Model/MDNewDetail.dart';
 import 'package:agriculture/Service/APICaller.dart';
@@ -13,13 +15,13 @@ class NewDetailController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    if (Get.arguments[0] != null) {
-      getNews(Get.arguments[0]);
+    if (Get.arguments['id'] != null) {
+      getNews(Get.arguments['id']);
     }
     getList();
   }
 
-  void getNews(int id) async {
+  void getNews(String id) async {
     isLoading.value = true;
     try {
       var data = await APICaller.getInstance().get('news/$id');
@@ -35,22 +37,23 @@ class NewDetailController extends GetxController {
 
   void getList() async {
     try {
-      final data = await APICaller.getInstance().get('news');
+      final data = await APICaller.getInstance().get('news?page=1');
       if (data != null) {
         List<dynamic> list = data['data'];
         var listItem =
-            list.map((dynamic json) => MDNew.fromJson(json)).toList();
+            list.take(5).map((dynamic json) => MDNew.fromJson(json)).toList();
         listNew.addAll(listItem);
       }
     } catch (e) {
       Utils.showSnackBar(title: 'Thông Báo', message: '$e');
     }
   }
+
   void scrollToTop() {
-  scrollController.animateTo(
-    0, // Vị trí cuộn đến (đầu danh sách)
-    duration: Duration(milliseconds: 500), // Thời gian cuộn (tùy chỉnh)
-    curve: Curves.easeInOut, // Hình dạng độ cong cuộn (tùy chỉnh)
-  );
-}
+    scrollController.animateTo(
+      0, // Vị trí cuộn đến (đầu danh sách)
+      duration: Duration(milliseconds: 500), // Thời gian cuộn (tùy chỉnh)
+      curve: Curves.easeInOut, // Hình dạng độ cong cuộn (tùy chỉnh)
+    );
+  }
 }

@@ -1,27 +1,27 @@
 class MDNew {
-  int? id;
+  String? id;
   String? title;
-  String? image;
   String? description;
-  String? publishDate;
+  String? image;
+  String? author;
 
-  MDNew({this.id, this.title, this.image, this.description, this.publishDate});
+  MDNew({this.id, this.title, this.description, this.image, this.author});
 
   MDNew.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    image = json['image'];
     description = json['description'];
-    publishDate = json['publish_date'];
+    image = json['image'];
+    author = json['author'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['title'] = this.title;
-    data['image'] = this.image;
     data['description'] = this.description;
-    data['publish_date'] = this.publishDate;
+    data['image'] = this.image;
+    data['author'] = this.author;
     return data;
   }
 }

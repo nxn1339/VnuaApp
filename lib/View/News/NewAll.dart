@@ -97,19 +97,37 @@ class NewAll extends StatelessWidget {
                     )
                   : controller.listNew.length != 0
                       ? Expanded(
-                          child: ListView.builder(
-                            itemCount: controller.listNew.length,
-                            itemBuilder: (context, index) {
-                              return New(
-                                newObject: controller.listNew[index],
-                                onTap: () {
-                                  controller.readNew(index);
-                                  Navigation.navigateTo(
-                                      page: 'NewDetail',
-                                      arguments: [controller.listNew[index].id]);
-                                },
-                              );
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              controller.refreshData();
+                              return Future<void>.delayed(
+                                  const Duration(seconds: 2));
                             },
+                            child: ListView.builder(
+                              controller: controller.scrollController.value,
+                              itemCount: controller.listNew.length,
+                              itemBuilder: (context, index) {
+                                if (index == controller.listNew.length - 1 &&
+                                    controller.total !=
+                                        controller.listNew.length) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  );
+                                }
+                                return New(
+                                  newObject: controller.listNew[index],
+                                  onTap: () {
+                                    Navigation.navigateTo(
+                                        page: 'NewDetail',
+                                        arguments: {
+                                          'id': controller.listNew[index].id
+                                        });
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         )
                       : Container(

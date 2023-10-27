@@ -15,19 +15,22 @@ class HomeController extends GetxController {
   RxList<MDNew> listNew = RxList<MDNew>();
   //index của slide
   RxInt activeIndex = 0.obs;
+  RxBool isBlinking = false.obs;
+
   @override
   void onInit() {
     super.onInit();
     //get dữ liệu slide từ api
     getSlide();
     //get dữ liệu tin tức từ api
-    getList();
+    getListNews();
+    startAutoBlink();
   }
 
   void getSlide() async {
     try {
-      final data = await _httpClient
-          .get(Uri.parse('https://64b1215d062767bc4825bd18.mockapi.io/api/v1/Slide'));
+      final data = await _httpClient.get(Uri.parse(
+          'https://64b1215d062767bc4825bd18.mockapi.io/api/v1/Slide'));
       if (data.statusCode == 200) {
         final jsonData = jsonDecode(utf8.decode(data.bodyBytes));
         final List<MDSlide> list =
@@ -39,15 +42,15 @@ class HomeController extends GetxController {
     }
   }
 
-  void getList() async {
+  void getListNews() async {
     try {
-      final data = await APICaller.getInstance().get('news');
-      if (data !=null) {
+      final data = await APICaller.getInstance().get('news?page=1');
+      if (data != null) {
         List<dynamic> list = data['data'];
-       var listItem =
-            list.map((dynamic json) => MDNew.fromJson(json)).toList();
-      listNew.addAll(listItem);
-
+        // Lấy 3 phần tử đầu tiên từ danh sách và chuyển đổi chúng thành đối tượng MDNew
+        var listItem =
+            list.take(3).map((dynamic json) => MDNew.fromJson(json)).toList();
+        listNew.addAll(listItem);
       }
     } catch (e) {
       Utils.showSnackBar(title: 'Thông Báo', message: '$e');
@@ -58,24 +61,10 @@ class HomeController extends GetxController {
     activeIndex.value = index;
   }
 
-//   void readNew(int index) async {
-//     getList();
-//     String view = ((int.parse(listNew[index].view.toString())) + 1).toString();
-//     var body = {
-//       "view": view,
-//     };
-//     try {
-//       final data = await _httpClient.put(
-//           Uri.parse(
-//               '${APICaller.getInstance().BASE_URL}/New/${listNew[index].id}'),
-//           body: body);
-//       if (data.statusCode == 200) {
-//         listNew[index].view =
-//             (int.parse(listNew[index].view.toString()) + 1).toString();
-//         listNew.refresh();
-//       }
-//     } catch (e) {
-//       Utils.showSnackBar(title: 'Thông Báo', message: '$e');
-//     }
-//   }
- }
+  void startAutoBlink() {
+    Future.delayed(Duration(milliseconds: 500), () {
+      isBlinking.value = !isBlinking.value;
+      startAutoBlink(); // Kích hoạt tự động nhấp nháy lại sau 1 giây
+    });
+  }
+}

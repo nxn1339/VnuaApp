@@ -24,8 +24,6 @@ class Home extends StatelessWidget {
         title: _appBar(context),
       ),
       body: Container(
-        height: size.height,
-        width: size.width,
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +34,6 @@ class Home extends StatelessWidget {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       const SizedBox(
                         height: 10,
@@ -177,30 +174,43 @@ class Home extends StatelessWidget {
                         height: 10,
                       ),
                       Obx(
-                        () => SizedBox(
-                          height: size.height * 0.21,
-                          width: size.width,
-                          child: Expanded(
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: controller.listNew.length,
-                              itemBuilder: (context, index) {
-                                return New(
+                        () => ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: controller.listNew.length,
+                          itemBuilder: (context, index) {
+                            return Stack(
+                              alignment: Alignment.topLeft,
+                              fit: StackFit.passthrough,
+                              children: [
+                                New(
                                   newObject: controller.listNew[index],
                                   onTap: () {
-                                    //tăng view
-                                    // controller.readNew(index);
-                                    //chuyển sang màn chi tiết
                                     Navigation.navigateTo(
                                         page: 'NewDetail',
-                                        arguments: [
-                                          controller.listNew[index].id
-                                        ]);
+                                        arguments: {
+                                          'id': controller.listNew[index].id
+                                        });
                                   },
-                                );
-                              },
-                            ),
-                          ),
+                                ),
+                                Container(
+                                  padding:
+                                      const EdgeInsets.only(top: 20, left: 20),
+                                  child: Obx(() {
+                                    return Text(
+                                      'New',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: controller.isBlinking.value
+                                              ? Colors.red
+                                              : Colors.yellow,
+                                          fontWeight: FontWeight.w700),
+                                    );
+                                  }),
+                                )
+                              ],
+                            );
+                          },
                         ),
                       ),
                     ]),
