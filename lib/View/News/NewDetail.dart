@@ -129,7 +129,7 @@ class NewDetail extends StatelessWidget {
                           SizedBox(
                             height: 12,
                           ),
-                          // Html(data: controller.mdNew.value.content),
+                          Html(data: '${controller.mdNew.value.content}'),
                           SizedBox(
                             height: 20,
                           ),
@@ -175,9 +175,9 @@ class NewDetail extends StatelessWidget {
                                         return New(
                                           newObject: controller.listNew[index],
                                           onTap: () {
-                                            // controller.getNews(
-                                            //     controller.listNew[index].id ??
-                                            //         1);
+                                            controller.getNews(
+                                                controller.listNew[index].id ??
+                                                    '');
                                             controller.scrollToTop();
                                           },
                                         );

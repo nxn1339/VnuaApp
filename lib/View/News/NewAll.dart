@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 
 class NewAll extends StatelessWidget {
   NewAll({super.key});
-  var delete = Get.delete<NewAllController>();
-  var controller = Get.put(NewAllController());
+  final delete = Get.delete<NewAllController>();
+  final controller = Get.put(NewAllController());
 
   @override
   Widget build(BuildContext context) {

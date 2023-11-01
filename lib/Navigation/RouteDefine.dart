@@ -1,5 +1,6 @@
 import 'package:agriculture/View/Home/Dashboard.dart';
 import 'package:agriculture/View/Home/Home.dart';
+import 'package:agriculture/View/Login/Login.dart';
 import 'package:agriculture/View/News/NewAll.dart';
 import 'package:agriculture/View/News/NewDetail.dart';
 import 'package:agriculture/View/Quizze/Quizze.dart';
@@ -26,6 +27,8 @@ class RouteDefine {
         return Recruitment();
       case 'QuizzeDetail':
         return QuizzeDetail();
+      case 'Login':
+        return Login();
     }
   }
 }
