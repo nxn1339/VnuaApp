@@ -7,7 +7,6 @@ import 'package:agriculture/View/Quizze/Quizze.dart';
 import 'package:agriculture/View/Profile/Profile.dart';
 import 'package:agriculture/View/Recruitment/Recruitment.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -18,8 +17,7 @@ class Dashboard extends StatelessWidget {
   }) : super(key: key);
   final String? title;
 
-  var delete = Get.delete<DashboardController>();
-  var controller = Get.put(DashboardController());
+  final controller = Get.put(DashboardController());
 
   bool isShowing = false;
 

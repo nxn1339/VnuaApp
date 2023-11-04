@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NewDetailController extends GetxController {
-  Rx<MDNewDetail> mdNew = MDNewDetail().obs;
+  final mdNew = MDNewDetail().obs;
   RxList<MDNew> listNew = RxList<MDNew>();
   RxBool isLoading = false.obs;
   ScrollController scrollController = ScrollController();

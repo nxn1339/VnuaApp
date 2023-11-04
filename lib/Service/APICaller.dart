@@ -32,16 +32,11 @@ class APICaller {
       return http.Response(
           'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
     });
-    if (response.statusCode != 200) {
-      Utils.showSnackBar(title: 'Thông báo', message: response.body);
+    if (jsonDecode(response.body)['code'] != 200) {
+      Utils.showSnackBar(
+          title: 'Thông báo', message: jsonDecode(response.body)['message']);
       return null;
     }
-    // if (jsonDecode(response.body)['error']['code'] != 0) {
-    //   Utils.showSnackBar(
-    //       title: 'Thông báo',
-    //       message: jsonDecode(response.body)['error']['message']);
-    //   return null;
-    // }
     return jsonDecode(response.body);
   }
 
@@ -60,14 +55,9 @@ class APICaller {
             'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
       },
     );
-    if (response.statusCode != 200) {
-      Utils.showSnackBar(title: 'Thông báo', message: response.body);
-      return null;
-    }
-    if (jsonDecode(response.body)['error']['code'] != 0) {
+    if (jsonDecode(response.body)['code'] != 200) {
       Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
+          title: 'Thông báo', message: jsonDecode(response.body)['message']);
       return null;
     }
     return jsonDecode(response.body);
@@ -89,14 +79,9 @@ class APICaller {
             "Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.", 408);
       },
     );
-    if (response.statusCode != 200) {
-      Utils.showSnackBar(title: 'Thông báo', message: response.body);
-      return null;
-    }
-    if (jsonDecode(response.body)['error']['code'] != 0) {
+    if (jsonDecode(response.body)['code'] != 200) {
       Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
+          title: 'Thông báo', message: jsonDecode(response.body)['message']);
       return null;
     }
     return jsonDecode(response.body);
@@ -118,14 +103,9 @@ class APICaller {
             "Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.", 408);
       },
     );
-    if (response.statusCode != 200) {
-      Utils.showSnackBar(title: 'Thông báo', message: response.body);
-      return null;
-    }
-    if (jsonDecode(response.body)['error']['code'] != 0) {
+    if (jsonDecode(response.body)['code'] != 200) {
       Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
+          title: 'Thông báo', message: jsonDecode(response.body)['message']);
       return null;
     }
     return jsonDecode(response.body);

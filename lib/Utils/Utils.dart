@@ -1,13 +1,31 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Utils {
-  static String convertMetToKm(double met) {
-    //return (met / 1000).toStringAsFixed(2);
-    return met.toStringAsFixed(2);
+  static final Future<SharedPreferences> _prefs =
+      SharedPreferences.getInstance();
+
+  static Future saveStringWithKey(String key, String value) async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.setString(key, value);
+  }
+
+  static Future saveIntWithKey(String key, int value) async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.setInt(key, value);
+  }
+
+  static Future getStringValueWithKey(String key) async {
+    final SharedPreferences prefs = await _prefs;
+    return prefs.getString(key) ?? '';
+  }
+
+  static Future getIntValueWithKey(String key) async {
+    final SharedPreferences prefs = await _prefs;
+    return prefs.getInt(key) ?? 0;
   }
 
   static void showSnackBar(

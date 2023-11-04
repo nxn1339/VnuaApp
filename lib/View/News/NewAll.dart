@@ -7,14 +7,13 @@ import 'package:get/get.dart';
 
 class NewAll extends StatelessWidget {
   NewAll({super.key});
-  final delete = Get.delete<NewAllController>();
   final controller = Get.put(NewAllController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Tin Tức',
           style: TextStyle(color: Colors.black),
         ),
@@ -29,7 +28,7 @@ class NewAll extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(20),
               padding: const EdgeInsets.symmetric(
                 horizontal: 20,
               ),
@@ -37,7 +36,7 @@ class NewAll extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(width: 1, color: Color(0xFFEAEEF3))),
+                  border: Border.all(width: 1, color: const Color(0xFFEAEEF3))),
               child: Row(
                 children: <Widget>[
                   Padding(
@@ -55,8 +54,8 @@ class NewAll extends StatelessWidget {
                         // newController.onSearchChanged();
                       },
                       keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0.0),
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.all(0.0),
                         hintText: 'Nhập từ khóa tìm kiếm',
                         hintStyle: TextStyle(
                             color: Color(0xFF99A2B3),
@@ -64,15 +63,15 @@ class NewAll extends StatelessWidget {
                             fontWeight: FontWeight.w500),
                         border: InputBorder.none,
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Color(0xFF2F3643),
                           fontSize: 14,
                           fontWeight: FontWeight.w500),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 12),
-                    decoration: BoxDecoration(
+                    margin: const EdgeInsets.symmetric(vertical: 12),
+                    decoration: const BoxDecoration(
                         border: Border(
                             left: BorderSide(
                                 width: 1,
@@ -87,15 +86,15 @@ class NewAll extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Obx(
               () => controller.isLoading.value
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : controller.listNew.length != 0
+                  : controller.listNew.isNotEmpty
                       ? Expanded(
                           child: RefreshIndicator(
                             onRefresh: () async {
@@ -130,27 +129,25 @@ class NewAll extends StatelessWidget {
                             ),
                           ),
                         )
-                      : Container(
-                          child: Center(
-                              child: Column(
-                            children: [
-                              Container(
-                                height: 300,
-                                width: 250,
-                                child: SvgPicture.asset(
-                                  'assets/images/not_data.svg',
-                                  fit: BoxFit.cover,
-                                ),
+                      : Center(
+                          child: Column(
+                          children: [
+                            SizedBox(
+                              height: 300,
+                              width: 250,
+                              child: SvgPicture.asset(
+                                'assets/images/not_data.svg',
+                                fit: BoxFit.cover,
                               ),
-                              Text(
-                                'Không có dữ liệu vui lòng thử lại sau !',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          )),
-                        ),
+                            ),
+                            const Text(
+                              'Không có dữ liệu vui lòng thử lại sau !',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w700),
+                            ),
+                          ],
+                        )),
             ),
           ],
         ),

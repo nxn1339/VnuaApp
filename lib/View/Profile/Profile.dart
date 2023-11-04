@@ -1,12 +1,12 @@
 import 'package:agriculture/Controller/ProfileController.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
+import 'package:agriculture/Service/APICaller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
   Size size = Size(0, 0);
-  final delete = Get.delete<ProfileController>();
   final controller = Get.put(ProfileController());
 
   @override
@@ -14,7 +14,7 @@ class Profile extends StatelessWidget {
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Cá nhân',
           style: TextStyle(color: Colors.black),
         ),
@@ -48,7 +48,60 @@ class Profile extends StatelessWidget {
   }
 
   Widget logged() {
-    return Container();
+    return Column(
+      children: [
+        ClipOval(
+          child: Image.network(
+            '${APICaller.getInstance().BASE_URL}${controller.avatar.value}',
+            height: 100,
+            width: 100,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                  color: Colors.black12,
+                  height: 100,
+                  width: 100,
+                  child: const Icon(Icons.question_mark_sharp));
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Text(
+          '${controller.name}',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Text('${controller.email}'),
+        const SizedBox(
+          height: 20,
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: const BoxDecoration(
+              color: Colors.lightBlue,
+              borderRadius: BorderRadius.all(Radius.circular(12))),
+          child: const Text(
+            'Chỉnh sửa',
+            style: TextStyle(
+                fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
+        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
+        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
+        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
+        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
+        cardItem(const Icon(Icons.key), 'Đổi mật khẩu'),
+        cardItem(const Icon(Icons.logout), 'Đăng xuất'),
+      ],
+    );
   }
 
   Widget noLogin(BuildContext context) {
@@ -63,14 +116,56 @@ class Profile extends StatelessWidget {
               Navigation.navigateTo(page: 'Login', arguments: 2);
             },
             child: Container(
-                padding: EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                     color: Colors.blue[100],
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                child: Text('Đăng nhập')),
+                    borderRadius: const BorderRadius.all(Radius.circular(8))),
+                child: const Text('Đăng nhập')),
           ),
         )
       ],
+    );
+  }
+
+  Widget cardItem(Icon icon, String title) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 12,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  icon,
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+              Icon(
+                Icons.arrow_right,
+                size: 20,
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Container(
+            height: 1,
+            color: Colors.black12,
+          ),
+        ],
+      ),
     );
   }
 }

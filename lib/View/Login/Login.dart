@@ -35,7 +35,7 @@ class Login extends StatelessWidget {
                                   onTap: () {
                                     Get.back();
                                   },
-                                  child: Icon(Icons.arrow_back_outlined)),
+                                  child: const Icon(Icons.arrow_back_outlined)),
                               const SizedBox(
                                 width: 20,
                               ),
@@ -92,31 +92,49 @@ class Login extends StatelessWidget {
                             ),
                           ]),
                         ),
-                        Container(
-                          width: size.width,
-                          margin: const EdgeInsets.only(top: 30),
-                          decoration: BoxDecoration(
-                              color: Colors.blue[100],
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
-                          child: const Center(
-                              child: Text(
-                            'Đăng nhập',
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600),
-                          )),
-                        )
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-          )
+          ),
+          Container(
+            padding: const EdgeInsets.only(bottom: 30),
+            child: Obx(
+              () => GestureDetector(
+                onTap: () {
+                  if (controller.isPassNull.value == false &&
+                      controller.isUserNull.value == false) {
+                    controller.login();
+                  }
+                },
+                child: Container(
+                  width: size.width,
+                  decoration: BoxDecoration(
+                      color: controller.isPassNull.value == false &&
+                              controller.isUserNull.value == false
+                          ? Colors.blue
+                          : const Color.fromARGB(255, 220, 221, 225),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Center(
+                      child: Text(
+                    'Đăng nhập',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: controller.isPassNull.value == false &&
+                                controller.isUserNull.value == false
+                            ? Colors.white
+                            : Colors.black,
+                        fontWeight: FontWeight.w600),
+                  )),
+                ),
+              ),
+            ),
+          ),
         ]),
       ),
     );
@@ -125,14 +143,22 @@ class Login extends StatelessWidget {
   Widget textField() {
     return Column(
       children: [
-        const Row(children: [
-          Icon(Icons.person_sharp),
-          SizedBox(
+        Row(children: [
+          const Icon(Icons.person_sharp),
+          const SizedBox(
             width: 8,
           ),
           Flexible(
             child: TextField(
-              decoration: InputDecoration(
+              onChanged: (value) {
+                if (value != '') {
+                  controller.isUserNull.value = false;
+                } else {
+                  controller.isUserNull.value = true;
+                }
+              },
+              controller: controller.user,
+              decoration: const InputDecoration(
                   border: InputBorder.none, hintText: 'Nhập tên đăng nhập'),
             ),
           ),
@@ -157,6 +183,14 @@ class Login extends StatelessWidget {
               ),
               Flexible(
                 child: TextField(
+                  onChanged: (value) {
+                    if (value != '') {
+                      controller.isPassNull.value = false;
+                    } else {
+                      controller.isPassNull.value = true;
+                    }
+                  },
+                  controller: controller.pass,
                   decoration: const InputDecoration(
                       border: InputBorder.none, hintText: 'Nhập mật khẩu'),
                   obscureText: controller.isHidePass.value,

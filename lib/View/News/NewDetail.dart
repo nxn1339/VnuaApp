@@ -13,8 +13,8 @@ import 'package:intl/intl.dart';
 
 class NewDetail extends StatelessWidget {
   NewDetail({super.key});
-  var delete = Get.delete<NewDetailController>();
-  var controller = Get.put(NewDetailController());
+  final delete = Get.delete<NewDetailController>();
+  final controller = Get.put(NewDetailController());
 
   @override
   Widget build(BuildContext context) {

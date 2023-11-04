@@ -11,8 +11,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
-  var delete = Get.delete<HomeController>();
-  var controller = Get.put(HomeController());
+  final controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {

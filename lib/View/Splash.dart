@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 class Splash extends StatelessWidget {
   Splash({super.key});
-  var delete = Get.delete<SplashController>();
   final splashController = Get.put((SplashController()));
 
   @override
