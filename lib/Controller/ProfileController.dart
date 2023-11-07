@@ -1,3 +1,4 @@
+import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:agriculture/Utils/Utils.dart';
 import 'package:get/get.dart';
@@ -9,15 +10,19 @@ class ProfileController extends GetxController {
   RxString name = ''.obs;
   RxString email = ''.obs;
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    loadSavedText();
-    fetchProfile();
+    await loadSavedText();
+    fetchProfile(uuid);
   }
 
-  void loadSavedText() async {
-    uuid = await Utils.getStringValueWithKey('id');
+  loadSavedText() async {
+    if (await Utils.getStringValueWithKey('id') != '' ||
+        await Utils.getStringValueWithKey('id') != null) {
+      uuid = await Utils.getStringValueWithKey('id');
+    }
+
     if (uuid.isNotEmpty) {
       isLogin.value = true;
     } else {
@@ -25,10 +30,9 @@ class ProfileController extends GetxController {
     }
   }
 
-  void fetchProfile() async {
+  void fetchProfile(String id) async {
     try {
-      var response = await APICaller.getInstance()
-          .get('user/${await Utils.getStringValueWithKey('id')}');
+      var response = await APICaller.getInstance().get('user/$id');
       if (response != null) {
         avatar.value = response['data']['avatar'];
         name.value = response['data']['name'];
@@ -37,5 +41,13 @@ class ProfileController extends GetxController {
     } catch (e) {
       Utils.showSnackBar(title: 'Thông báo', message: '$e');
     }
+  }
+
+  void logOut() async {
+    Utils.saveStringWithKey('id', '');
+    Utils.saveStringWithKey('name', '');
+    Utils.saveStringWithKey('avatar', '');
+    Utils.saveStringWithKey('token', '');
+    isLogin.value = false;
   }
 }

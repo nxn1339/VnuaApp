@@ -1,6 +1,7 @@
 import 'package:agriculture/Controller/ProfileController.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/Service/APICaller.dart';
+import 'package:agriculture/Utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -91,15 +92,28 @@ class Profile extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 20,
+          height: 50,
         ),
-        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
-        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
-        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
-        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
-        cardItem(const Icon(Icons.sms_failed_sharp), 'Item'),
-        cardItem(const Icon(Icons.key), 'Đổi mật khẩu'),
-        cardItem(const Icon(Icons.logout), 'Đăng xuất'),
+        cardItem(const Icon(Icons.help_outline), 'Yêu cầu tư vấn', () {}),
+        cardItem(const Icon(Icons.mail_outline), 'Hòm thư', () {}),
+        cardItem(const Icon(Icons.key), 'Đổi mật khẩu', () {}),
+        cardItem(const Icon(Icons.error_outline), 'Thông tin ứng dụng', () {}),
+        cardItem(const Icon(Icons.logout), 'Đăng xuất', () {
+          Utils.showDialog(
+            title: 'Đăng xuất',
+            content: const Text('Bạn có muốn đăng xuất không ?'),
+            textConfirm: 'Đăng xuất',
+            textCancel: 'Quay lại',
+            confirmTextColor: Colors.white,
+            onConfirm: () {
+              controller.logOut();
+              Get.back();
+            },
+            onCancel: () {
+              Get.back();
+            },
+          );
+        }),
       ],
     );
   }
@@ -127,44 +141,47 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget cardItem(Icon icon, String title) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 12,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  icon,
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    title,
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-              Icon(
-                Icons.arrow_right,
-                size: 20,
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          Container(
-            height: 1,
-            color: Colors.black12,
-          ),
-        ],
+  Widget cardItem(Icon icon, String title, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 12,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    icon,
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                Icon(
+                  Icons.arrow_right,
+                  size: 20,
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            Container(
+              height: 1,
+              color: Colors.black12,
+            ),
+          ],
+        ),
       ),
     );
   }

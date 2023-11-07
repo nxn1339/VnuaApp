@@ -26,6 +26,9 @@ class LoginController extends GetxController {
       var response = await APICaller.getInstance().post('user/login', body);
       if (response != null) {
         if (Get.isRegistered<ProfileController>() == true) {
+          final profileController = Get.find<ProfileController>();
+          profileController.fetchProfile(response['data']['id']);
+          profileController.isLogin.value = true;
           saveUser(response);
           Get.back();
         }

@@ -23,7 +23,7 @@ class Splash extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
-              image: AssetImage("assets/images/Splash.jpg"), fit: BoxFit.fill),
+              image: AssetImage("assets/images/Splash.jpg"), fit: BoxFit.cover),
         ),
         child: Center(
           child: Image.asset(
