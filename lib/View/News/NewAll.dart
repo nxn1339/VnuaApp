@@ -100,7 +100,7 @@ class NewAll extends StatelessWidget {
                             onRefresh: () async {
                               controller.refreshData();
                               return Future<void>.delayed(
-                                  const Duration(seconds: 2));
+                                  const Duration(seconds: 1));
                             },
                             child: ListView.builder(
                               controller: controller.scrollController.value,

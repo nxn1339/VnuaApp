@@ -11,10 +11,12 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
+
   final controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
+    controller.chekcDeleteController();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -29,190 +31,201 @@ class Home extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        height: 30,
-                        child: Marquee(
-                          text:
-                              ' HỌC VIỆN NÔNG NGHIỆP VIỆT NAM - CƠ HỘI HỌC TẬP VÀ THÀNH ĐẠT',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          scrollAxis: Axis.horizontal,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          blankSpace: 20.0,
-                          velocity: 50.0,
-                          pauseAfterRound: const Duration(seconds: 1),
-                          startPadding: 10.0,
-                          accelerationDuration: const Duration(seconds: 1),
-                          accelerationCurve: Curves.linear,
-                          decelerationDuration:
-                              const Duration(milliseconds: 500),
-                          decelerationCurve: Curves.easeOut,
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  controller.refreshData();
+                  //đợi 1s sau mới refresh được tiếp
+                  return Future<void>.delayed(const Duration(seconds: 1));
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Obx(
-                        () => Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  CarouselSlider(
-                                      items: generateImagesTitles(
-                                          images: controller.listSlide,
-                                          size: size),
-                                      options: CarouselOptions(
-                                          height: 150,
-                                          viewportFraction: 1.0,
-                                          enlargeCenterPage: false,
-                                          autoPlay: true,
-                                          autoPlayInterval:
-                                              const Duration(seconds: 3),
-                                          onPageChanged: (index, other) {
-                                            controller.setActiveIndex(index);
-                                          })),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Center(
-                                      child: AnimatedSmoothIndicator(
-                                        activeIndex:
-                                            controller.activeIndex.value,
-                                        count: controller.listSlide.length,
-                                        effect: const ExpandingDotsEffect(
-                                          dotWidth: 8,
-                                          dotHeight: 8,
-                                          activeDotColor: Colors.white,
+                        SizedBox(
+                          height: 30,
+                          child: Marquee(
+                            text:
+                                ' HỌC VIỆN NÔNG NGHIỆP VIỆT NAM - CƠ HỘI HỌC TẬP VÀ THÀNH ĐẠT',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            scrollAxis: Axis.horizontal,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            blankSpace: 20.0,
+                            velocity: 50.0,
+                            pauseAfterRound: const Duration(seconds: 1),
+                            startPadding: 10.0,
+                            accelerationDuration: const Duration(seconds: 1),
+                            accelerationCurve: Curves.linear,
+                            decelerationDuration:
+                                const Duration(milliseconds: 500),
+                            decelerationCurve: Curves.easeOut,
+                          ),
+                        ),
+                        Obx(
+                          () => Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    CarouselSlider(
+                                        items: generateImagesTitles(
+                                            images: controller.listSlide,
+                                            size: size),
+                                        options: CarouselOptions(
+                                            height: 150,
+                                            viewportFraction: 1.0,
+                                            enlargeCenterPage: false,
+                                            autoPlay: true,
+                                            autoPlayInterval:
+                                                const Duration(seconds: 3),
+                                            onPageChanged: (index, other) {
+                                              controller.setActiveIndex(index);
+                                            })),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: Center(
+                                        child: AnimatedSmoothIndicator(
+                                          activeIndex:
+                                              controller.activeIndex.value,
+                                          count: controller.listSlide.length,
+                                          effect: const ExpandingDotsEffect(
+                                            dotWidth: 8,
+                                            dotHeight: 8,
+                                            activeDotColor: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                ])),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: IntrinsicHeight(
+                                    )
+                                  ])),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: IntrinsicHeight(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _menu('assets/icons/loudspeaker.svg',
+                                    'Tuyển sinh Đại học', Color(0xff53373A)),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                _menu('assets/icons/student.svg',
+                                    'Học bổng - Việc làm', Color(0xff006343)),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                _menu('assets/icons/study.svg',
+                                    'Kết quả nghiên cứu', Color(0xffFF9700))
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 4,
+                          color: Color(0xffFF9F00),
+                        ),
+                        Container(
+                          height: 4,
+                          color: Color(0xff006343),
+                        ),
+                        Container(
+                          height: 4,
+                          color: Color(0xff533535),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              _menu('assets/icons/loudspeaker.svg',
-                                  'Tuyển sinh Đại học', Color(0xff53373A)),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              _menu('assets/icons/student.svg',
-                                  'Học bổng - Việc làm', Color(0xff006343)),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              _menu('assets/icons/study.svg',
-                                  'Kết quả nghiên cứu', Color(0xffFF9700))
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 4,
-                        color: Color(0xffFF9F00),
-                      ),
-                      Container(
-                        height: 4,
-                        color: Color(0xff006343),
-                      ),
-                      Container(
-                        height: 4,
-                        color: Color(0xff533535),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Tin tức & sự kiện',
-                                style: TextStyle(
-                                    color: Color(0xff009B6B),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: const BoxDecoration(
-                                  color: Color(0xffcceeff),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigation.navigateTo(page: 'NewAll');
-                                },
-                                child: const Text(
-                                  'Xem thêm',
+                              Expanded(
+                                child: Text(
+                                  'Tin tức & sự kiện',
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xFF0060AF),
+                                      color: Color(0xff009B6B),
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w500),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Obx(
-                        () => ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: controller.listNew.length,
-                          itemBuilder: (context, index) {
-                            return Stack(
-                              alignment: Alignment.topLeft,
-                              fit: StackFit.passthrough,
-                              children: [
-                                New(
-                                  newObject: controller.listNew[index],
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: const BoxDecoration(
+                                    color: Color(0xffcceeff),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15))),
+                                child: GestureDetector(
                                   onTap: () {
-                                    Navigation.navigateTo(
-                                        page: 'NewDetail',
-                                        arguments: {
-                                          'id': controller.listNew[index].id
-                                        });
+                                    Navigation.navigateTo(page: 'NewAll');
+                                  },
+                                  child: const Text(
+                                    'Xem thêm',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Color(0xFF0060AF),
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Obx(
+                          () => controller.isLoading.value
+                              ? Center(child: CircularProgressIndicator())
+                              : ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: controller.listNew.length,
+                                  itemBuilder: (context, index) {
+                                    return Stack(
+                                      alignment: Alignment.topLeft,
+                                      fit: StackFit.passthrough,
+                                      children: [
+                                        New(
+                                          newObject: controller.listNew[index],
+                                          onTap: () {
+                                            Navigation.navigateTo(
+                                                page: 'NewDetail',
+                                                arguments: {
+                                                  'id': controller
+                                                      .listNew[index].id
+                                                });
+                                          },
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 20, left: 20),
+                                          child: Obx(() {
+                                            return Text(
+                                              'New',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: controller
+                                                          .isBlinking.value
+                                                      ? Colors.red
+                                                      : Colors.yellow,
+                                                  fontWeight: FontWeight.w700),
+                                            );
+                                          }),
+                                        )
+                                      ],
+                                    );
                                   },
                                 ),
-                                Container(
-                                  padding:
-                                      const EdgeInsets.only(top: 20, left: 20),
-                                  child: Obx(() {
-                                    return Text(
-                                      'New',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: controller.isBlinking.value
-                                              ? Colors.red
-                                              : Colors.yellow,
-                                          fontWeight: FontWeight.w700),
-                                    );
-                                  }),
-                                )
-                              ],
-                            );
-                          },
                         ),
-                      ),
-                    ]),
+                      ]),
+                ),
               ),
             ),
           ],

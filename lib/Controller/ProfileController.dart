@@ -17,6 +17,15 @@ class ProfileController extends GetxController {
     fetchProfile(uuid);
   }
 
+  void chekcDeleteController() {
+    //check nếu chưa load đc dữ liệu xóa controller và tạo lại
+    //nếu có dữ liệu rồi sẽ đc dữ lại
+    if (name.value == '') {
+      final delete = Get.delete<ProfileController>();
+      final controller = Get.put(ProfileController());
+    }
+  }
+
   loadSavedText() async {
     if (await Utils.getStringValueWithKey('id') != '' ||
         await Utils.getStringValueWithKey('id') != null) {

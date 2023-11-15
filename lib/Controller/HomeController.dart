@@ -16,6 +16,7 @@ class HomeController extends GetxController {
   //index của slide
   RxInt activeIndex = 0.obs;
   RxBool isBlinking = false.obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -25,6 +26,15 @@ class HomeController extends GetxController {
     //get dữ liệu tin tức từ api
     getListNews();
     startAutoBlink();
+  }
+
+  void chekcDeleteController() {
+    //check nếu chưa load đc dữ liệu xóa controller và tạo lại
+    //nếu có dữ liệu rồi sẽ đc dữ lại
+    if (listNew.isEmpty) {
+      final delete = Get.delete<HomeController>();
+      final controller = Get.put(HomeController());
+    }
   }
 
   void getSlide() async {
@@ -43,6 +53,7 @@ class HomeController extends GetxController {
   }
 
   void getListNews() async {
+    isLoading.value = true;
     try {
       final data = await APICaller.getInstance().get('news?page=1');
       if (data != null) {
@@ -51,6 +62,8 @@ class HomeController extends GetxController {
         var listItem =
             list.take(3).map((dynamic json) => MDNew.fromJson(json)).toList();
         listNew.addAll(listItem);
+        isLoading.value = false;
+
       }
     } catch (e) {
       Utils.showSnackBar(title: 'Thông Báo', message: '$e');
@@ -66,5 +79,10 @@ class HomeController extends GetxController {
       isBlinking.value = !isBlinking.value;
       startAutoBlink(); // Kích hoạt tự động nhấp nháy lại sau 1 giây
     });
+  }
+
+  void refreshData() {
+    listNew.clear();
+    getListNews();
   }
 }

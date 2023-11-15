@@ -8,10 +8,12 @@ import 'package:get/get.dart';
 class Profile extends StatelessWidget {
   Profile({super.key});
   Size size = Size(0, 0);
+
   final controller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
+    controller.chekcDeleteController();
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(

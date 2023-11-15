@@ -39,7 +39,6 @@ class NewAllController extends GetxController {
         var listItem =
             list.map((dynamic json) => MDNew.fromJson(json)).toList();
         listNew.addAll(listItem);
-        print(data);
         if (page == 1) {
           isLoading.value = false;
         }
