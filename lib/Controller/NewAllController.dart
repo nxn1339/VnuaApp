@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:agriculture/Model/MDNew.dart';
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:agriculture/Utils/Utils.dart';
@@ -10,6 +12,8 @@ class NewAllController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   int page = 1;
   int total = 0;
+  Timer? _debounce;
+  TextEditingController search = TextEditingController();
 
   @override
   void onInit() {
@@ -31,7 +35,8 @@ class NewAllController extends GetxController {
       isLoading.value = true;
     }
     try {
-      final data = await APICaller.getInstance().get('news?page=$page');
+      final data = await APICaller.getInstance()
+          .get('news?page=$page&keyword=${search.text}');
       if (data != null) {
         total = data['meta']['total'];
         List<dynamic> list = data['data'];
@@ -52,5 +57,13 @@ class NewAllController extends GetxController {
     page = 1;
     listNew.clear();
     fecthList();
+  }
+
+  // tìm kiếm
+  onSearchChanged() {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      refreshData();
+    });
   }
 }

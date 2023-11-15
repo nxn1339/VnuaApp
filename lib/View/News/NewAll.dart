@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 class NewAll extends StatelessWidget {
   NewAll({super.key});
+  final delete = Get.delete<NewAllController>();
   final controller = Get.put(NewAllController());
 
   @override
@@ -49,9 +50,9 @@ class NewAll extends StatelessWidget {
                   ),
                   Flexible(
                     child: TextFormField(
-                      // controller: newController.textSearchData.value,
+                      controller: controller.search,
                       onChanged: (value) {
-                        // newController.onSearchChanged();
+                        controller.onSearchChanged();
                       },
                       keyboardType: TextInputType.text,
                       decoration: const InputDecoration(
@@ -67,20 +68,6 @@ class NewAll extends StatelessWidget {
                           color: Color(0xFF2F3643),
                           fontSize: 14,
                           fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 12),
-                    decoration: const BoxDecoration(
-                        border: Border(
-                            left: BorderSide(
-                                width: 1,
-                                color: Color.fromRGBO(225, 229, 237, 1)))),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: SvgPicture.asset(
-                          'assets/icons/document-filter.svg',
-                          fit: BoxFit.cover),
                     ),
                   ),
                 ],
@@ -108,7 +95,8 @@ class NewAll extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 if (index == controller.listNew.length - 1 &&
                                     controller.total !=
-                                        controller.listNew.length) {
+                                        controller.listNew.length &&
+                                    controller.listNew.length > 9) {
                                   return const Center(
                                     child: CircularProgressIndicator(
                                       backgroundColor: Colors.white,
