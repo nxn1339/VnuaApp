@@ -1,4 +1,4 @@
-import 'package:agriculture/Controller/ProfileController.dart';
+import 'package:agriculture/Controller/Profile/ProfileController.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:agriculture/Utils/Utils.dart';
@@ -13,7 +13,6 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.chekcDeleteController();
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -32,15 +31,25 @@ class Profile extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Obx(
-                      () => controller.isLogin.value == false
-                          ? noLogin(context)
-                          : logged(),
-                    )
-                  ],
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  controller.refreshData();
+                  return Future.delayed(
+                    Duration(seconds: 1),
+                    () {},
+                  );
+                },
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Obx(
+                        () => controller.isLogin.value == false
+                            ? noLogin(context)
+                            : logged(),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -96,8 +105,9 @@ class Profile extends StatelessWidget {
         const SizedBox(
           height: 50,
         ),
-        cardItem(const Icon(Icons.help_outline), 'Yêu cầu tư vấn', () {}),
-        cardItem(const Icon(Icons.mail_outline), 'Hòm thư', () {}),
+        cardItem(const Icon(Icons.mail_outline), 'Hòm thư', () {
+          Navigation.navigateTo(page: 'MailBox');
+        }),
         cardItem(const Icon(Icons.key), 'Đổi mật khẩu', () {}),
         cardItem(const Icon(Icons.error_outline), 'Thông tin ứng dụng', () {}),
         cardItem(const Icon(Icons.logout), 'Đăng xuất', () {

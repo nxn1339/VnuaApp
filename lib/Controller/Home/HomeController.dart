@@ -4,6 +4,7 @@ import 'package:agriculture/Model/MDNew.dart';
 import 'package:agriculture/Model/MDSlide.dart';
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:agriculture/Utils/Utils.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,6 +18,10 @@ class HomeController extends GetxController {
   RxInt activeIndex = 0.obs;
   RxBool isBlinking = false.obs;
   RxBool isLoading = false.obs;
+  TextEditingController textEditName = TextEditingController();
+  TextEditingController textEditPhoneNumber = TextEditingController();
+  TextEditingController textEditEmail = TextEditingController();
+  TextEditingController textEditContent = TextEditingController();
 
   @override
   void onInit() {
@@ -63,7 +68,6 @@ class HomeController extends GetxController {
             list.take(3).map((dynamic json) => MDNew.fromJson(json)).toList();
         listNew.addAll(listItem);
         isLoading.value = false;
-
       }
     } catch (e) {
       Utils.showSnackBar(title: 'Thông Báo', message: '$e');
@@ -84,5 +88,30 @@ class HomeController extends GetxController {
   void refreshData() {
     listNew.clear();
     getListNews();
+  }
+
+  //hàm gửi tư vấn
+  void sendConsultation() async {
+    var body = {
+      "name": textEditName.text,
+      "phone": textEditPhoneNumber.text,
+      "email": textEditEmail.text,
+      "content": textEditContent.text
+    };
+    try {
+      var response = await APICaller.getInstance().post('advise', body);
+      if (response != null) {
+        resetEditText();
+        Utils.showSnackBar(
+            title: 'Thông báo', message: 'Gửi tư vấn thành công !');
+      }
+    } catch (e) {}
+  }
+
+  void resetEditText() {
+    textEditName.text = '';
+    textEditPhoneNumber.text = '';
+    textEditEmail.text = '';
+    textEditContent.text = '';
   }
 }

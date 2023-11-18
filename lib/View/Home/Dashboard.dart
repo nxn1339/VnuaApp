@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'package:agriculture/Controller/DashboardController.dart';
-import 'package:agriculture/Navigation/Navigation.dart';
+import 'package:agriculture/Controller/Home/DashboardController.dart';
 import 'package:agriculture/View/Home/Home.dart';
-import 'package:agriculture/View/News/NewAll.dart';
 import 'package:agriculture/View/Quizze/Quizze.dart';
 import 'package:agriculture/View/Profile/Profile.dart';
-import 'package:agriculture/View/Recruitment/Recruitment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -43,8 +40,6 @@ class Dashboard extends StatelessWidget {
         return Home();
       case "Quizze":
         return Quizze();
-      case "Recruitment":
-        return Recruitment();
       case "Profile":
         return Profile();
     }
@@ -91,16 +86,19 @@ class Dashboard extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      Text(page['tile'],
+                      RichText(
+                        text: TextSpan(
+                          text: page['tile'],
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500,
                             color: page['page'] != null &&
                                     controller.nameRoute.value == page['page']
                                 ? Color(0xFF0060AF)
                                 : Color(0xFF6F767E),
                           ),
-                          overflow: TextOverflow.ellipsis),
+                        ),
+                      )
                     ],
                   ),
                 ),

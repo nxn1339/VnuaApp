@@ -3,10 +3,10 @@ import 'package:agriculture/View/Home/Home.dart';
 import 'package:agriculture/View/Login/Login.dart';
 import 'package:agriculture/View/News/NewAll.dart';
 import 'package:agriculture/View/News/NewDetail.dart';
+import 'package:agriculture/View/Profile/MailBox.dart';
 import 'package:agriculture/View/Quizze/Quizze.dart';
 import 'package:agriculture/View/Profile/Profile.dart';
 import 'package:agriculture/View/Quizze/QuizzeDetail.dart';
-import 'package:agriculture/View/Recruitment/Recruitment.dart';
 
 class RouteDefine {
   static dynamic getPageByName(String pageName) {
@@ -23,12 +23,12 @@ class RouteDefine {
         return NewAll();
       case 'NewDetail':
         return NewDetail();
-      case 'recruitment':
-        return Recruitment();
       case 'QuizzeDetail':
         return QuizzeDetail();
       case 'Login':
         return Login();
+      case 'MailBox':
+        return MailBox();
     }
   }
 }

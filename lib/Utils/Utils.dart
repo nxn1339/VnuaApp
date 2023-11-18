@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -82,5 +83,69 @@ class Utils {
         confirmTextColor: confirmTextColor,
         buttonColor: buttonColor,
         radius: radius);
+  }
+
+  static Widget textField(
+      {required Widget icon,
+      TextEditingController? controller,
+      String? hintText,
+      TextInputType? textInputType,
+      List<TextInputFormatter>? inputFormatters,
+      int? maxLines,
+      ValueChanged? onChanged}) {
+    return Column(
+      children: [
+        Row(children: [
+          icon,
+          const SizedBox(
+            width: 8,
+          ),
+          Flexible(
+            child: TextField(
+              onChanged: onChanged,
+              controller: controller,
+              maxLines: maxLines,
+              keyboardType: textInputType,
+              inputFormatters: inputFormatters,
+              decoration:
+                  InputDecoration(border: InputBorder.none, hintText: hintText),
+            ),
+          ),
+        ]),
+        Container(
+          height: 1,
+          color: Color.fromRGBO(221, 225, 231, 1),
+        )
+      ],
+    );
+  }
+
+  static Widget textFieldMuti(
+      {required Widget icon,
+      TextEditingController? controller,
+      String? hintText,
+      TextInputType? textInputType,
+      List<TextInputFormatter>? inputFormatters,
+      int? maxLines}) {
+    return Column(
+      children: [
+        Row(children: [
+          icon,
+          const SizedBox(
+            width: 8,
+          ),
+          Flexible(
+            child: TextField(
+              controller: controller,
+              maxLines: 5,
+              keyboardType: textInputType,
+              inputFormatters: inputFormatters,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), hintText: hintText),
+            ),
+          ),
+        ]),
+      ],
+    );
   }
 }

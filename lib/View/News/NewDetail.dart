@@ -1,10 +1,6 @@
-import 'dart:ffi';
-
 import 'package:agriculture/Components/New.dart';
-import 'package:agriculture/Controller/NewDetailController.dart';
-import 'package:agriculture/Navigation/Navigation.dart';
+import 'package:agriculture/Controller/New/NewDetailController.dart';
 import 'package:agriculture/Service/APICaller.dart';
-import 'package:agriculture/Utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,7 +9,7 @@ import 'package:intl/intl.dart';
 
 class NewDetail extends StatelessWidget {
   NewDetail({super.key});
-  final delete = Get.delete<NewDetailController>();
+  var delete = Get.delete<NewDetailController>();
   final controller = Get.put(NewDetailController());
 
   @override

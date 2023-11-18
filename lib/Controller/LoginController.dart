@@ -1,4 +1,4 @@
-import 'package:agriculture/Controller/ProfileController.dart';
+import 'package:agriculture/Controller/Profile/ProfileController.dart';
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:agriculture/Utils/Utils.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,6 @@ class LoginController extends GetxController {
         if (Get.isRegistered<ProfileController>() == true) {
           final profileController = Get.find<ProfileController>();
           profileController.fetchProfile(response['data']['id']);
-          profileController.isLogin.value = true;
           saveUser(response);
           Get.back();
         }

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:agriculture/Model/MDNew.dart';
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:agriculture/Utils/Utils.dart';
@@ -48,9 +47,7 @@ class NewAllController extends GetxController {
           isLoading.value = false;
         }
       }
-    } catch (e) {
-      Utils.showSnackBar(title: 'Thông Báo', message: '$e');
-    }
+    } catch (e) {}
   }
 
   refreshData() {

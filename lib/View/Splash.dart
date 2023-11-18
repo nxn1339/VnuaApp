@@ -1,4 +1,4 @@
-import 'package:agriculture/Controller/SplashController.dart';
+import 'package:agriculture/Controller/Home/SplashController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

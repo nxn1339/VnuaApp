@@ -1,9 +1,11 @@
 import 'package:agriculture/Components/New.dart';
-import 'package:agriculture/Controller/HomeController.dart';
+import 'package:agriculture/Controller/Home/HomeController.dart';
 import 'package:agriculture/Model/MDSlide.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
+import 'package:agriculture/Utils/Utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';
@@ -11,13 +13,14 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
+  Size size = Size(0, 0);
 
   final controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     controller.chekcDeleteController();
-    Size size = MediaQuery.of(context).size;
+    size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -38,6 +41,7 @@ class Home extends StatelessWidget {
                   return Future<void>.delayed(const Duration(seconds: 1));
                 },
                 child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,24 +107,31 @@ class Home extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                _menu('assets/icons/loudspeaker.svg',
-                                    'Tuyển sinh Đại học', Color(0xff53373A)),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                _menu('assets/icons/student.svg',
-                                    'Học bổng - Việc làm', Color(0xff006343)),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                _menu('assets/icons/study.svg',
-                                    'Kết quả nghiên cứu', Color(0xffFF9700))
-                              ],
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _menu(
+                                  'assets/icons/graduation_cap.svg',
+                                  'Trắc nghiệm',
+                                  const Color(0xff1560BD),
+                                  () {}),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              _menu('assets/icons/mail.svg', 'Gửi tư vấn',
+                                  const Color(0xffD24B66), () {
+                                _showBottomDialog(context);
+                              }),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              _menu(
+                                'assets/icons/majors.svg',
+                                'Ngành đào tạo',
+                                const Color(0xff00CAB1),
+                                () {},
+                              )
+                            ],
                           ),
                         ),
                         const SizedBox(
@@ -282,40 +293,38 @@ class Home extends StatelessWidget {
     );
   }
 
-  _menu(String icon, title, Color color) {
+  _menu(String icon, title, Color color, VoidCallback voidCallback) {
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-            color: color,
-            borderRadius: const BorderRadius.all(Radius.circular(6))),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              icon,
-              height: 24,
-              width: 24,
-              color: Colors.white,
-            ),
-            const SizedBox(
-              width: 3,
-            ),
-            Expanded(
-              child: SizedBox(
-                height: 50,
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500),
-                  overflow: TextOverflow.clip,
-                  textAlign: TextAlign.center,
-                ),
+      child: GestureDetector(
+        onTap: voidCallback,
+        child: Container(
+          decoration: BoxDecoration(
+              color: color,
+              borderRadius: const BorderRadius.all(Radius.circular(6))),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                icon,
+                height: 24,
+                width: 24,
+                color: Colors.white,
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 3,
+              ),
+              Text(
+                title,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500),
+                overflow: TextOverflow.clip,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -333,5 +342,81 @@ class Home extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ))
         .toList();
+  }
+
+  void _showBottomDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  height: 5,
+                  width: size.width * 0.3,
+                ),
+              ),
+              Align(
+                  alignment: Alignment.bottomRight,
+                  child: GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: const Icon(Icons.close))),
+              Utils.textField(
+                  controller: controller.textEditName,
+                  icon: const Icon(Icons.abc),
+                  hintText: 'Nhập tên'),
+              const SizedBox(
+                height: 10,
+              ),
+              Utils.textField(
+                  controller: controller.textEditPhoneNumber,
+                  icon: Icon(Icons.phone),
+                  hintText: 'Nhập số điện thoại',
+                  textInputType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              const SizedBox(
+                height: 10,
+              ),
+              Utils.textField(
+                  controller: controller.textEditEmail,
+                  icon: const Icon(Icons.mail),
+                  hintText: 'Nhập email',
+                  textInputType: TextInputType.emailAddress),
+              const SizedBox(
+                height: 10,
+              ),
+              Utils.textFieldMuti(
+                controller: controller.textEditContent,
+                icon: const Icon(Icons.comment_rounded),
+                hintText: 'Nhập nội dung',
+                textInputType: TextInputType.multiline,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    controller.sendConsultation();
+                    Get.back();
+                  },
+                  child: const Text('Gửi'),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

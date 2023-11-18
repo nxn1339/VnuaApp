@@ -1,4 +1,3 @@
-import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:agriculture/Utils/Utils.dart';
 import 'package:get/get.dart';
@@ -14,15 +13,9 @@ class ProfileController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     await loadSavedText();
-    fetchProfile(uuid);
-  }
-
-  void chekcDeleteController() {
-    //check nếu chưa load đc dữ liệu xóa controller và tạo lại
-    //nếu có dữ liệu rồi sẽ đc dữ lại
-    if (name.value == '') {
-      final delete = Get.delete<ProfileController>();
-      final controller = Get.put(ProfileController());
+    if (uuid != '') {
+      fetchProfile(uuid);
+      print(uuid);
     }
   }
 
@@ -46,10 +39,15 @@ class ProfileController extends GetxController {
         avatar.value = response['data']['avatar'];
         name.value = response['data']['name'];
         email.value = response['data']['email'];
+        isLogin.value = true;
       }
     } catch (e) {
-      Utils.showSnackBar(title: 'Thông báo', message: '$e');
+      print('lỗi');
     }
+  }
+
+  void refreshData() {
+    fetchProfile(uuid);
   }
 
   void logOut() async {

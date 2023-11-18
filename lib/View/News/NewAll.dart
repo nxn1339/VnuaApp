@@ -1,5 +1,5 @@
 import 'package:agriculture/Components/New.dart';
-import 'package:agriculture/Controller/NewAllController.dart';
+import 'package:agriculture/Controller/New/NewAllController.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class NewAll extends StatelessWidget {
   NewAll({super.key});
-  final delete = Get.delete<NewAllController>();
+  var delete = Get.delete<NewAllController>();
   final controller = Get.put(NewAllController());
 
   @override
@@ -96,7 +96,7 @@ class NewAll extends StatelessWidget {
                                 if (index == controller.listNew.length - 1 &&
                                     controller.total !=
                                         controller.listNew.length &&
-                                    controller.listNew.length > 9) {
+                                    controller.listNew.length > 11) {
                                   return const Center(
                                     child: CircularProgressIndicator(
                                       backgroundColor: Colors.white,

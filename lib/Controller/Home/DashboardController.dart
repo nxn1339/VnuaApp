@@ -22,13 +22,6 @@ class DashboardController extends GetxController {
       'tile': 'Trắc nghiệm',
     },
     {
-      'page': "Recruitment",
-      'screen': "",
-      'icon': "assets/icons/megaphone.svg",
-      'icon_active': "assets/icons/megaphone_active.svg",
-      'tile': 'Tuyển dụng',
-    },
-    {
       'page': "Profile",
       'screen': "",
       'icon': "assets/icons/user.svg",
