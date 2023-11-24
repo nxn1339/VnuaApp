@@ -2,6 +2,7 @@ import 'package:agriculture/Components/New.dart';
 import 'package:agriculture/Controller/Home/HomeController.dart';
 import 'package:agriculture/Model/MDSlide.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
+import 'package:agriculture/Utils/UtilColor.dart';
 import 'package:agriculture/Utils/Utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -344,6 +345,7 @@ class Home extends StatelessWidget {
         .toList();
   }
 
+  //show tư vấn
   void _showBottomDialog(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -372,18 +374,40 @@ class Home extends StatelessWidget {
                       },
                       child: const Icon(Icons.close))),
               Utils.textField(
-                  controller: controller.textEditName,
-                  icon: const Icon(Icons.abc),
-                  hintText: 'Nhập tên'),
+                controller: controller.textEditName,
+                icon: const Icon(Icons.abc),
+                hintText: 'Nhập tên',
+                onChanged: (value) {
+                  controller.resetValidate(value);
+                },
+              ),
+              Obx(() => Text(
+                    '${controller.textValidateName.value}',
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: UtilColor.textRed),
+                  )),
               const SizedBox(
                 height: 10,
               ),
               Utils.textField(
-                  controller: controller.textEditPhoneNumber,
-                  icon: Icon(Icons.phone),
-                  hintText: 'Nhập số điện thoại',
-                  textInputType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+                controller: controller.textEditPhoneNumber,
+                icon: Icon(Icons.phone),
+                hintText: 'Nhập số điện thoại',
+                textInputType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onChanged: (value) {
+                  controller.resetValidate(value);
+                },
+              ),
+              Obx(() => Text(
+                    '${controller.textValidatePhoneNumber.value}',
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: UtilColor.textRed),
+                  )),
               const SizedBox(
                 height: 10,
               ),
@@ -400,15 +424,26 @@ class Home extends StatelessWidget {
                 icon: const Icon(Icons.comment_rounded),
                 hintText: 'Nhập nội dung',
                 textInputType: TextInputType.multiline,
+                onChanged: (value) {
+                  controller.resetValidate(value);
+                },
               ),
+              Obx(() => Text(
+                    '${controller.textValidateContent.value}',
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: UtilColor.textRed),
+                  )),
               const SizedBox(
                 height: 20,
               ),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    controller.sendConsultation();
-                    Get.back();
+                    if (controller.checkValidate() == true) {
+                      controller.sendConsultation();
+                    }
                   },
                   child: const Text('Gửi'),
                 ),
@@ -417,6 +452,6 @@ class Home extends StatelessWidget {
           ),
         );
       },
-    );
+    ).whenComplete(() => controller.resetEditText());
   }
 }

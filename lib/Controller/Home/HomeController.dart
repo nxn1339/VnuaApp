@@ -22,6 +22,9 @@ class HomeController extends GetxController {
   TextEditingController textEditPhoneNumber = TextEditingController();
   TextEditingController textEditEmail = TextEditingController();
   TextEditingController textEditContent = TextEditingController();
+  RxString textValidateName = ''.obs;
+  RxString textValidatePhoneNumber = ''.obs;
+  RxString textValidateContent = ''.obs;
 
   @override
   void onInit() {
@@ -101,7 +104,7 @@ class HomeController extends GetxController {
     try {
       var response = await APICaller.getInstance().post('advise', body);
       if (response != null) {
-        resetEditText();
+        Get.back();
         Utils.showSnackBar(
             title: 'Thông báo', message: 'Gửi tư vấn thành công !');
       }
@@ -113,5 +116,39 @@ class HomeController extends GetxController {
     textEditPhoneNumber.text = '';
     textEditEmail.text = '';
     textEditContent.text = '';
+  }
+
+  bool checkValidate() {
+    if (textEditName.text.trim() == '') {
+      textValidateName.value = 'Tên không được để trống';
+    } else {
+      textValidateName.value = '';
+    }
+    if (textEditPhoneNumber.text.trim() == '') {
+      textValidatePhoneNumber.value = 'Số điện thoại không được để trống';
+    } else {
+      textValidatePhoneNumber.value = '';
+    }
+    if (textEditContent.text.trim() == '') {
+      textValidateContent.value = 'Nội dung không được để trống';
+    } else {
+      textValidateContent.value = '';
+    }
+
+    if (textEditName.text.trim() != '' &&
+        textEditPhoneNumber.text.trim() != '' &&
+        textEditContent.text.trim() != '') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void resetValidate(String value) {
+    if (value.trim() != '') {
+      textValidateName.value = '';
+      textValidatePhoneNumber.value = '';
+      textValidateContent.value = '';
+    }
   }
 }

@@ -126,7 +126,8 @@ class Utils {
       String? hintText,
       TextInputType? textInputType,
       List<TextInputFormatter>? inputFormatters,
-      int? maxLines}) {
+      int? maxLines,
+      ValueChanged? onChanged}) {
     return Column(
       children: [
         Row(children: [
@@ -136,6 +137,7 @@ class Utils {
           ),
           Flexible(
             child: TextField(
+              onChanged: onChanged,
               controller: controller,
               maxLines: 5,
               keyboardType: textInputType,

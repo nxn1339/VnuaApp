@@ -51,7 +51,9 @@ class MailBox extends StatelessWidget {
                             ),
                           );
                         }
-                        return cardAdvise(controller.listAdvise[index]);
+                        return GestureDetector(onTap: () {
+                           controller.readMailBox(index);
+                        },child: cardAdvise(controller.listAdvise[index]));
                       },
                     ),
                   )),

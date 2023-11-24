@@ -4,6 +4,8 @@ import 'package:agriculture/View/Login/Login.dart';
 import 'package:agriculture/View/News/NewAll.dart';
 import 'package:agriculture/View/News/NewDetail.dart';
 import 'package:agriculture/View/Profile/MailBox.dart';
+import 'package:agriculture/View/Profile/MailBoxDetail.dart';
+import 'package:agriculture/View/Profile/ProfileDetail.dart';
 import 'package:agriculture/View/Quizze/Quizze.dart';
 import 'package:agriculture/View/Profile/Profile.dart';
 import 'package:agriculture/View/Quizze/QuizzeDetail.dart';
@@ -29,6 +31,10 @@ class RouteDefine {
         return Login();
       case 'MailBox':
         return MailBox();
+      case 'MailBoxDetail':
+        return MailBoxDetail();
+      case 'ProfileDetail':
+        return ProfileDetail();
     }
   }
 }

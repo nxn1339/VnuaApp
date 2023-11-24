@@ -1,6 +1,7 @@
 import 'package:agriculture/Controller/Profile/ProfileController.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/Service/APICaller.dart';
+import 'package:agriculture/Utils/UtilColor.dart';
 import 'package:agriculture/Utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -87,27 +88,46 @@ class Profile extends StatelessWidget {
         const SizedBox(
           height: 4,
         ),
+        Text(
+          controller.permissionName.value,
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: UtilColor.textBlue),
+        ),
+        const SizedBox(
+          height: 4,
+        ),
         Text('${controller.email}'),
         const SizedBox(
           height: 20,
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: const BoxDecoration(
-              color: Colors.lightBlue,
-              borderRadius: BorderRadius.all(Radius.circular(12))),
-          child: const Text(
-            'Chỉnh sửa',
-            style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+        GestureDetector(
+          onTap: () {
+            Navigation.navigateTo(page: 'ProfileDetail');
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: const BoxDecoration(
+                color: Colors.lightBlue,
+                borderRadius: BorderRadius.all(Radius.circular(12))),
+            child: const Text(
+              'Chỉnh sửa',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white),
+            ),
           ),
         ),
         const SizedBox(
           height: 50,
         ),
-        cardItem(const Icon(Icons.mail_outline), 'Hòm thư', () {
-          Navigation.navigateTo(page: 'MailBox');
-        }),
+        controller.permission.value != 3
+            ? cardItem(const Icon(Icons.mail_outline), 'Hòm thư', () {
+                Navigation.navigateTo(page: 'MailBox');
+              })
+            : Container(),
         cardItem(const Icon(Icons.key), 'Đổi mật khẩu', () {}),
         cardItem(const Icon(Icons.error_outline), 'Thông tin ứng dụng', () {}),
         cardItem(const Icon(Icons.logout), 'Đăng xuất', () {

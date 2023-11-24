@@ -1,4 +1,6 @@
 import 'package:agriculture/Model/MDAdvise.dart';
+import 'package:agriculture/Model/MDAdviseDetail.dart';
+import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,7 @@ class MailBoxController extends GetxController {
   int page = 1;
   int total = 0;
   RxBool isLoading = false.obs;
+  MDAdviseDetail advise = MDAdviseDetail();
   @override
   void onInit() {
     // TODO: implement onInit
@@ -49,5 +52,19 @@ class MailBoxController extends GetxController {
     page = 1;
     listAdvise.clear();
     fecthAdvise();
+  }
+
+  void readMailBox(int index) async {
+    try {
+      var response =
+          await APICaller.getInstance().get('advise/${listAdvise[index].id}');
+      if (response != null) {
+        advise = MDAdviseDetail.fromJson(response['data']);
+        Navigation.navigateTo(
+            page: 'MailBoxDetail', arguments: {'advise': advise});
+        listAdvise[index].isReaded = 1;
+        listAdvise.refresh();
+      }
+    } catch (e) {}
   }
 }

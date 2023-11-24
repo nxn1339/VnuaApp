@@ -8,6 +8,8 @@ class ProfileController extends GetxController {
   RxString avatar = ''.obs;
   RxString name = ''.obs;
   RxString email = ''.obs;
+  RxInt permission = 3.obs;
+  RxString permissionName = 'Học Sinh'.obs;
   @override
   void onInit() async {
     // TODO: implement onInit
@@ -39,10 +41,22 @@ class ProfileController extends GetxController {
         avatar.value = response['data']['avatar'];
         name.value = response['data']['name'];
         email.value = response['data']['email'];
+        permission.value = response['data']['permission'];
+        switch (permission.value) {
+          case 1:
+            permissionName.value = 'Admin';
+            break;
+          case 2:
+            permissionName.value = 'Sinh viên tình nguyện';
+            break;
+          default:
+            permissionName.value = 'Học sinh';
+            break;
+        }
         isLogin.value = true;
       }
     } catch (e) {
-      print('lỗi');
+      print(e);
     }
   }
 
