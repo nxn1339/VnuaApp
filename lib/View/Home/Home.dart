@@ -24,6 +24,7 @@ class Home extends StatelessWidget {
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         toolbarHeight: 100,
         backgroundColor: Color(0xFF002D4A),
         title: _appBar(context),
@@ -130,7 +131,9 @@ class Home extends StatelessWidget {
                                 'assets/icons/majors.svg',
                                 'Ngành đào tạo',
                                 const Color(0xff00CAB1),
-                                () {},
+                                () {
+                                  Navigation.navigateTo(page: 'Field');
+                                },
                               )
                             ],
                           ),
@@ -348,6 +351,7 @@ class Home extends StatelessWidget {
   //show tư vấn
   void _showBottomDialog(BuildContext context) {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {

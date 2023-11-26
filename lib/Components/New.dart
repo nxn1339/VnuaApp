@@ -19,6 +19,7 @@ class New extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
+        color: Colors.white,
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Color(0xFFE3EDF6), width: 1),
           borderRadius: BorderRadius.circular(8),

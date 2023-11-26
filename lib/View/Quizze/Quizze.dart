@@ -9,6 +9,7 @@ class Quizze extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: const Text(
           'Trắc nghiệm',
           style: TextStyle(color: Colors.black),

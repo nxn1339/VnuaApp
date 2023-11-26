@@ -4,7 +4,7 @@ import '../Utils/Utils.dart';
 
 class APICaller {
   static APICaller _apiCaller = APICaller();
-  final String BASE_URL = "http://192.168.2.19:3000/";
+  final String BASE_URL = "http://192.168.31.200:3000/";
   final _httpClient = http.Client();
 
   static APICaller getInstance() {

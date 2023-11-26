@@ -14,6 +14,7 @@ class NewAll extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: const Text(
           'Tin Tức',
           style: TextStyle(color: Colors.black),

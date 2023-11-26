@@ -19,6 +19,7 @@ class NewDetail extends StatelessWidget {
         title: Text('Chi tiết tin tức'),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
+        automaticallyImplyLeading: true,
         elevation: 0.3,
       ),
       body: Obx(

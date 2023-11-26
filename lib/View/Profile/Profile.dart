@@ -17,6 +17,7 @@ class Profile extends StatelessWidget {
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: const Text(
           'Cá nhân',
           style: TextStyle(color: Colors.black),
@@ -104,7 +105,8 @@ class Profile extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Navigation.navigateTo(page: 'ProfileDetail');
+            Navigation.navigateTo(
+                page: 'ProfileDetail', arguments: {'id': controller.uuid});
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

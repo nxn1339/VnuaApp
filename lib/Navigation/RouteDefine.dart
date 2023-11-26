@@ -1,4 +1,6 @@
 import 'package:agriculture/View/Home/Dashboard.dart';
+import 'package:agriculture/View/Home/Field.dart';
+import 'package:agriculture/View/Home/FieldDetail.dart';
 import 'package:agriculture/View/Home/Home.dart';
 import 'package:agriculture/View/Login/Login.dart';
 import 'package:agriculture/View/News/NewAll.dart';
@@ -35,6 +37,10 @@ class RouteDefine {
         return MailBoxDetail();
       case 'ProfileDetail':
         return ProfileDetail();
+      case 'Field':
+        return Field();
+      case 'FieldDetail':
+        return FieldDetail();
     }
   }
 }

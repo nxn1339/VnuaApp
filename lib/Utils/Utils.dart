@@ -92,7 +92,8 @@ class Utils {
       TextInputType? textInputType,
       List<TextInputFormatter>? inputFormatters,
       int? maxLines,
-      ValueChanged? onChanged}) {
+      ValueChanged? onChanged,
+      bool? enabled}) {
     return Column(
       children: [
         Row(children: [
@@ -102,6 +103,7 @@ class Utils {
           ),
           Flexible(
             child: TextField(
+              enabled: enabled,
               onChanged: onChanged,
               controller: controller,
               maxLines: maxLines,

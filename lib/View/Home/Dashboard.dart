@@ -17,6 +17,12 @@ class Dashboard extends StatelessWidget {
   final controller = Get.put(DashboardController());
 
   bool isShowing = false;
+  // Danh sách các trang
+  List<Widget> _widgetOptions = <Widget>[
+    Home(),
+    Quizze(),
+    Profile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,86 +31,33 @@ class Dashboard extends StatelessWidget {
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,
         bottomNavigationBar: bottomNavigationBase(context),
-        body: Stack(
-          children: <Widget>[
-            pageDefine(),
-          ],
+        body: Center(
+          child: _widgetOptions.elementAt(controller.selectedIndex.value),
         ),
       ),
     );
   }
 
-  Widget pageDefine() {
-    switch (controller.nameRoute.value) {
-      case "Home":
-        return Home();
-      case "Quizze":
-        return Quizze();
-      case "Profile":
-        return Profile();
-    }
-    return Home();
-  }
-
   Widget bottomNavigationBase(BuildContext context) {
-    return Obx(() => (BottomAppBar(
-          color: Colors.white,
-          shape: const CircularNotchedRectangle(),
-          elevation: 7,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: controller.pages.map((page) {
-              return GestureDetector(
-                onTap: () {
-                  if (page['page'] != null &&
-                      page['page'] != controller.nameRoute.value &&
-                      page['page'] != "") {
-                    controller.nameRoute.value = page['page'];
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(top: 10),
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        page['page'] != null &&
-                                controller.nameRoute.value == page['page']
-                            ? page['icon_active']
-                            : page['icon'],
-                        height: 25,
-                        width: 25,
-                        color: page['page'] != null &&
-                                controller.nameRoute.value == page['page']
-                            ? Color(0xFF0060AF)
-                            : Color(0xFF6F767E),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: page['tile'],
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: page['page'] != null &&
-                                    controller.nameRoute.value == page['page']
-                                ? Color(0xFF0060AF)
-                                : Color(0xFF6F767E),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        )));
+    return BottomNavigationBar(
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Trang chủ',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.question_mark_outlined),
+          label: 'Trắc Nghiệm',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Cá nhân',
+        ),
+      ],
+      currentIndex: controller.selectedIndex.value,
+      selectedItemColor: Colors.blue,
+      unselectedItemColor: Colors.black54, // Màu sắc khi không được chọn
+      onTap: controller.onItemTapped,
+    );
   }
 }
