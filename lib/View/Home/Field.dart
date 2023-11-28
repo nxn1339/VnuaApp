@@ -27,7 +27,7 @@ class Field extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(top: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Obx(
                     () => ListView.builder(
                         itemCount: controller.listField.length,

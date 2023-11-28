@@ -1,8 +1,14 @@
+import 'package:agriculture/Controller/Quizze/QuizzeController.dart';
+import 'package:agriculture/Model/Quizze/MDPackage.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
+import 'package:agriculture/Service/APICaller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Quizze extends StatelessWidget {
-  const Quizze({super.key});
+  Quizze({super.key});
+  final delete = Get.delete<QuizzeController>();
+  final controller = Get.put(QuizzeController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,44 +30,26 @@ class Quizze extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    packQuizze(
-                        'Test tính cách',
-                        '32',
-                        '40',
-                        'assets/images/test1.png',
-                        'MBTI là cách viết ngắn gọn của Chỉ số phân loại Myers-Briggs (Myers-Briggs Type Indication), là một phương pháp sử dụng các câu hỏi trắc nghiệm tâm lý để tìm hiểu tâm lý, tính cách cũng như cách con người nhận thức thế giới xung quanh, đưa ra quyết định cho một vấn đề...',
-                        () {
-                      Navigation.navigateTo(
-                          page: 'QuizzeDetail',
-                          arguments: {'title': 'Test tính cách'});
+              child: Obx(
+                () => ListView.builder(
+                    itemCount: controller.listPackage.length,
+                    itemBuilder: (context, index) {
+                      return packQuizze(controller.listPackage[index], () {
+                        Navigation.navigateTo(page: 'QuizzeDetail', arguments: {
+                          'title': controller.listPackage[index].name,
+                          'id': controller.listPackage[index].id
+                        });
+                      });
                     }),
-                    packQuizze(
-                        'Test đa trí thông minh',
-                        '90',
-                        '20',
-                        'assets/images/test2.png',
-                        'Trắc nghiệm đa trí thông minh MI (Multiple Intelligences) là phương pháp đánh giá trí thông minh nổi trội của mỗi người, dựa trên Lý thuyết đa trí thông minh (Theory of Multiple Intelligences) nghiên cứu bởi Giáo sư Tâm lý học Howard Gardner.',
-                        () {
-                      Navigation.navigateTo(
-                          page: 'QuizzeDetail',
-                          arguments: {'title': 'Test đa trí thông minh'});
-                    }),
-                  ],
-                ),
               ),
-            ),
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget packQuizze(String title, String questionNumber, String time,
-      String img, String content, VoidCallback voidCallback) {
+  Widget packQuizze(MDPackage mdPackage, VoidCallback voidCallback) {
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -78,30 +66,30 @@ class Quizze extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      mdPackage.name.toString(),
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    RichText(
-                        text: TextSpan(
-                            children: [
-                          const TextSpan(
-                              text: 'Số câu hỏi: ',
-                              style: TextStyle(color: Colors.blue)),
-                          TextSpan(
-                              text: questionNumber,
-                              style: const TextStyle(color: Colors.red))
-                        ],
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black))),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    // RichText(
+                    //     text: TextSpan(
+                    //         children: [
+                    //       const TextSpan(
+                    //           text: 'Số câu hỏi: ',
+                    //           style: TextStyle(color: Colors.blue)),
+                    //       TextSpan(
+                    //           text: questionNumber,
+                    //           style: const TextStyle(color: Colors.red))
+                    //     ],
+                    //         style: const TextStyle(
+                    //             fontSize: 14,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: Colors.black))),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
                     RichText(
                         text: TextSpan(
                             children: [
@@ -109,7 +97,7 @@ class Quizze extends StatelessWidget {
                               text: 'Thời gian làm: ',
                               style: TextStyle(color: Colors.blue)),
                           TextSpan(
-                              text: '$time phút',
+                              text: '${mdPackage.time} phút',
                               style: const TextStyle(color: Colors.red))
                         ],
                             style: const TextStyle(
@@ -119,15 +107,23 @@ class Quizze extends StatelessWidget {
                   ],
                 ),
               ),
-              Image.asset(
-                img,
+              Image.network(
+                '${APICaller.getInstance().BASE_URL}${mdPackage.avatar}',
                 height: 120,
                 width: 120,
+                fit: BoxFit.cover,
+                errorBuilder: (BuildContext context, Object object,
+                    StackTrace? stackTrace) {
+                  return const Icon(
+                    Icons.question_mark,
+                    size: 70,
+                  );
+                },
               )
             ],
           ),
           children: [
-            Text(content),
+            Text(mdPackage.description.toString()),
             const SizedBox(
               height: 10,
             ),
