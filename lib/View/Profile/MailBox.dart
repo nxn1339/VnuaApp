@@ -1,5 +1,6 @@
 import 'package:agriculture/Controller/Profile/MailBoxController.dart';
 import 'package:agriculture/Model/MDAdvise.dart';
+import 'package:agriculture/Utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -31,32 +32,39 @@ class MailBox extends StatelessWidget {
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-                : RefreshIndicator(
-                    onRefresh: () async {
-                      controller.refreshData();
-                      return Future.delayed(
-                        const Duration(seconds: 1),
-                      );
-                    },
-                    child: ListView.builder(
-                      controller: controller.scrollController.value,
-                      itemCount: controller.listAdvise.length,
-                      itemBuilder: (context, index) {
-                        if (index == controller.listAdvise.length - 1 &&
-                            controller.total != controller.listAdvise.length &&
-                            controller.listAdvise.length > 11) {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              backgroundColor: Colors.white,
-                            ),
+                : controller.listAdvise.isEmpty
+                    ? Utils.noData()
+                    : RefreshIndicator(
+                        onRefresh: () async {
+                          controller.refreshData();
+                          return Future.delayed(
+                            const Duration(seconds: 1),
                           );
-                        }
-                        return GestureDetector(onTap: () {
-                           controller.readMailBox(index);
-                        },child: cardAdvise(controller.listAdvise[index]));
-                      },
-                    ),
-                  )),
+                        },
+                        child: ListView.builder(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          controller: controller.scrollController.value,
+                          itemCount: controller.listAdvise.length,
+                          itemBuilder: (context, index) {
+                            if (index == controller.listAdvise.length - 1 &&
+                                controller.total !=
+                                    controller.listAdvise.length &&
+                                controller.listAdvise.length > 11) {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: Colors.white,
+                                ),
+                              );
+                            }
+                            return GestureDetector(
+                                onTap: () {
+                                  controller.readMailBox(index);
+                                },
+                                child:
+                                    cardAdvise(controller.listAdvise[index]));
+                          },
+                        ),
+                      )),
       ),
     );
   }

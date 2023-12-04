@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class FieldController extends GetxController {
   RxList<MDField> listField = RxList<MDField>();
+  RxBool isLoading = false.obs;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -12,6 +13,7 @@ class FieldController extends GetxController {
   }
 
   void fecthField() async {
+    isLoading.value = true;
     try {
       var response = await APICaller.getInstance().get('field');
       if (response != null) {
@@ -20,6 +22,7 @@ class FieldController extends GetxController {
         var listItem =
             list.map((dynamic json) => MDField.fromJson(json)).toList();
         listField.addAll(listItem);
+        isLoading.value = false;
       }
     } catch (e) {}
   }

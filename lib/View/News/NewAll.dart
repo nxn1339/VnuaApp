@@ -1,6 +1,7 @@
 import 'package:agriculture/Components/New.dart';
 import 'package:agriculture/Controller/New/NewAllController.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
+import 'package:agriculture/Utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -77,67 +78,47 @@ class NewAll extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Obx(
-              () => controller.isLoading.value
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : controller.listNew.isNotEmpty
-                      ? Expanded(
-                          child: RefreshIndicator(
-                            onRefresh: () async {
-                              controller.refreshData();
-                              return Future<void>.delayed(
-                                  const Duration(seconds: 1));
-                            },
-                            child: ListView.builder(
-                              controller: controller.scrollController.value,
-                              itemCount: controller.listNew.length,
-                              itemBuilder: (context, index) {
-                                if (index == controller.listNew.length - 1 &&
-                                    controller.total !=
-                                        controller.listNew.length &&
-                                    controller.listNew.length > 11) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(
-                                      backgroundColor: Colors.white,
-                                    ),
-                                  );
-                                }
-                                return New(
-                                  newObject: controller.listNew[index],
-                                  onTap: () {
-                                    Navigation.navigateTo(
-                                        page: 'NewDetail',
-                                        arguments: {
-                                          'id': controller.listNew[index].id
-                                        });
-                                  },
+            Obx(() => controller.isLoading.value
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : controller.listNew.isNotEmpty
+                    ? Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            controller.refreshData();
+                            return Future<void>.delayed(
+                                const Duration(seconds: 1));
+                          },
+                          child: ListView.builder(
+                            controller: controller.scrollController.value,
+                            itemCount: controller.listNew.length,
+                            itemBuilder: (context, index) {
+                              if (index == controller.listNew.length - 1 &&
+                                  controller.total !=
+                                      controller.listNew.length &&
+                                  controller.listNew.length > 11) {
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.white,
+                                  ),
                                 );
-                              },
-                            ),
+                              }
+                              return New(
+                                newObject: controller.listNew[index],
+                                onTap: () {
+                                  Navigation.navigateTo(
+                                      page: 'NewDetail',
+                                      arguments: {
+                                        'id': controller.listNew[index].id
+                                      });
+                                },
+                              );
+                            },
                           ),
-                        )
-                      : Center(
-                          child: Column(
-                          children: [
-                            SizedBox(
-                              height: 300,
-                              width: 250,
-                              child: SvgPicture.asset(
-                                'assets/images/not_data.svg',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const Text(
-                              'Không có dữ liệu vui lòng thử lại sau !',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        )),
-            ),
+                        ),
+                      )
+                    : Utils.noData()),
           ],
         ),
       ),

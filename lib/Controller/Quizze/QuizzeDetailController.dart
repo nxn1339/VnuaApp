@@ -7,6 +7,7 @@ class QuizzeDetailController extends GetxController {
   RxList<MDQuestion> listQuestion = RxList<MDQuestion>();
   RxList<int> listQuestionAnswer = RxList<int>(); // list câu hỏi đã chọn
   RxInt selectQuest = 0.obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onReady() async {
@@ -18,6 +19,7 @@ class QuizzeDetailController extends GetxController {
 
   //lấy các câu hỏi trên api
   void doTheTest(String id) async {
+    isLoading.value = true;
     try {
       var response = await APICaller.getInstance().get('package/$id');
       if (response != null) {
@@ -27,6 +29,7 @@ class QuizzeDetailController extends GetxController {
         listQuestion.addAll(listItem);
         var item = List<int>.generate(listQuestion.length, (index) => 0);
         listQuestionAnswer.addAll(item);
+        isLoading.value = false;
       }
     } catch (e) {}
   }

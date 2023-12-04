@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 class QuizzeController extends GetxController {
   RxList<MDPackage> listPackage = RxList<MDPackage>();
   List<MDQuestion> question = [];
+  RxBool isLoading = false.obs;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -15,6 +16,7 @@ class QuizzeController extends GetxController {
   }
 
   void fecthPackage() async {
+    isLoading.value = true;
     try {
       var response = await APICaller.getInstance().get('package');
       if (response != null) {
@@ -23,6 +25,7 @@ class QuizzeController extends GetxController {
             list.map((dynamic json) => MDPackage.fromJson(json)).toList();
         listPackage.addAll(listItem);
         listPackage.refresh();
+        isLoading.value = false;
       }
     } catch (e) {}
   }
@@ -42,5 +45,10 @@ class QuizzeController extends GetxController {
             arguments: {'title': name, 'question': question});
       }
     } catch (e) {}
+  }
+
+  void refresh() {
+    listPackage.clear();
+    fecthPackage();
   }
 }

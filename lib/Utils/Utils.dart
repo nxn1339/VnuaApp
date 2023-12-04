@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -151,5 +152,26 @@ class Utils {
         ]),
       ],
     );
+  }
+
+  static Widget noData() {
+    return Center(
+        child: Column(
+      children: [
+        SizedBox(
+          height: 300,
+          width: 250,
+          child: SvgPicture.asset(
+            'assets/images/not_data.svg',
+            fit: BoxFit.cover,
+          ),
+        ),
+        const Text(
+          'Không có dữ liệu vui lòng thử lại sau !',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+      ],
+    ));
   }
 }

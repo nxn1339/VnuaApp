@@ -2,6 +2,7 @@ import 'package:agriculture/Controller/Quizze/QuizzeController.dart';
 import 'package:agriculture/Model/Quizze/MDPackage.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/Service/APICaller.dart';
+import 'package:agriculture/Utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,16 +32,32 @@ class Quizze extends StatelessWidget {
           children: [
             Expanded(
               child: Obx(
-                () => ListView.builder(
-                    itemCount: controller.listPackage.length,
-                    itemBuilder: (context, index) {
-                      return packQuizze(controller.listPackage[index], () {
-                        Navigation.navigateTo(page: 'QuizzeDetail', arguments: {
-                          'title': controller.listPackage[index].name,
-                          'id': controller.listPackage[index].id
-                        });
-                      });
-                    }),
+                () => controller.isLoading.value == true
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : controller.listPackage.isEmpty
+                        ? Utils.noData()
+                        : RefreshIndicator(
+                            onRefresh: () async {
+                              controller.refresh();
+                              return Future.delayed(Duration(seconds: 1));
+                            },
+                            child: ListView.builder(
+                                itemCount: controller.listPackage.length,
+                                itemBuilder: (context, index) {
+                                  return packQuizze(
+                                      controller.listPackage[index], () {
+                                    Navigation.navigateTo(
+                                        page: 'QuizzeDetail',
+                                        arguments: {
+                                          'title': controller
+                                              .listPackage[index].name,
+                                          'id': controller.listPackage[index].id
+                                        });
+                                  });
+                                }),
+                          ),
               ),
             )
           ],
