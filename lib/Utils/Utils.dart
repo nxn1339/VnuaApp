@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Utils {
@@ -94,7 +96,8 @@ class Utils {
       List<TextInputFormatter>? inputFormatters,
       int? maxLines,
       ValueChanged? onChanged,
-      bool? enabled}) {
+      bool? enabled,
+      TextStyle? style}) {
     return Column(
       children: [
         Row(children: [
@@ -104,6 +107,7 @@ class Utils {
           ),
           Flexible(
             child: TextField(
+              style: style,
               enabled: enabled,
               onChanged: onChanged,
               controller: controller,
@@ -173,5 +177,31 @@ class Utils {
         ),
       ],
     ));
+  }
+
+  static Future<List<File>> getImagePicker(int source, bool multiImage) async {
+    ImagePicker _picker = ImagePicker();
+    List<File> files = List.empty(growable: true);
+    try {
+      if (multiImage) {
+        List<XFile> lst = await _picker.pickMultiImage();
+        for (var file in lst) {
+          files.add(File(file.path));
+        }
+      } else {
+        await _picker
+            .pickImage(
+          source: source == 1 ? ImageSource.camera : ImageSource.gallery,
+        )
+            .then((value) {
+          if (value != null) {
+            files.add(File(value.path));
+          }
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+    return files;
   }
 }

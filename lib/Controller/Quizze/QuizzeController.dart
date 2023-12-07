@@ -15,6 +15,13 @@ class QuizzeController extends GetxController {
     fecthPackage();
   }
 
+  void checkDeleteController() {
+    if (listPackage.isEmpty) {
+      final delete = Get.delete<QuizzeController>();
+      final controller = Get.put(QuizzeController());
+    }
+  }
+
   void fecthPackage() async {
     isLoading.value = true;
     try {

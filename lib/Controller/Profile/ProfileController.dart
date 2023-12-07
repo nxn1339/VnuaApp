@@ -3,13 +3,13 @@ import 'package:agriculture/Utils/Utils.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  RxBool isLogin = false.obs;
+  RxBool isLogin = true.obs;
   String uuid = '';
   RxString avatar = ''.obs;
   RxString name = ''.obs;
   RxString email = ''.obs;
   RxInt permission = 3.obs;
-  RxString permissionName = 'Học Sinh'.obs;
+  RxString permissionName = ''.obs;
   @override
   void onInit() async {
     // TODO: implement onInit
@@ -17,7 +17,6 @@ class ProfileController extends GetxController {
     await loadSavedText();
     if (uuid != '') {
       fetchProfile(uuid);
-      print(uuid);
     }
   }
 
@@ -38,6 +37,7 @@ class ProfileController extends GetxController {
     try {
       var response = await APICaller.getInstance().get('user/$id');
       if (response != null) {
+        uuid = id;
         avatar.value = response['data']['avatar'];
         name.value = response['data']['name'];
         email.value = response['data']['email'];

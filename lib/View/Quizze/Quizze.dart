@@ -8,11 +8,12 @@ import 'package:get/get.dart';
 
 class Quizze extends StatelessWidget {
   Quizze({super.key});
-  final delete = Get.delete<QuizzeController>();
+  // final delete = Get.delete<QuizzeController>();
   final controller = Get.put(QuizzeController());
 
   @override
   Widget build(BuildContext context) {
+    controller.checkDeleteController();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(

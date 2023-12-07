@@ -91,6 +91,7 @@ class NewAll extends StatelessWidget {
                                 const Duration(seconds: 1));
                           },
                           child: ListView.builder(
+                            physics: const AlwaysScrollableScrollPhysics(),
                             controller: controller.scrollController.value,
                             itemCount: controller.listNew.length,
                             itemBuilder: (context, index) {

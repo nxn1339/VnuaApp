@@ -16,25 +16,14 @@ class Dashboard extends StatelessWidget {
 
   final controller = Get.put(DashboardController());
 
-  bool isShowing = false;
-  // Danh sách các trang
-  List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Quizze(),
-    Profile(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniCenterDocked,
-        bottomNavigationBar: bottomNavigationBase(context),
-        body: Center(
-          child: _widgetOptions.elementAt(controller.selectedIndex.value),
-        ),
-      ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.miniCenterDocked,
+          bottomNavigationBar: bottomNavigationBase(context),
+          body: pageDefine()),
     );
   }
 
@@ -59,5 +48,18 @@ class Dashboard extends StatelessWidget {
       unselectedItemColor: Colors.black54, // Màu sắc khi không được chọn
       onTap: controller.onItemTapped,
     );
+  }
+
+  Widget pageDefine() {
+    switch (controller.selectedIndex.value) {
+      case 0:
+        return Home();
+      case 1:
+        return Quizze();
+      case 2:
+        return Profile();
+      default:
+        return Home();
+    }
   }
 }
