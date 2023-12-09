@@ -158,6 +158,56 @@ class Utils {
     );
   }
 
+  static Widget textFieldPass(
+      {required Widget icon,
+      ValueChanged? changed,
+      TextEditingController? controller,
+      bool? obscureText,
+      String? hintText,
+      VoidCallback? onTap}) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            icon,
+            const SizedBox(
+              width: 8,
+            ),
+            Flexible(
+              child: TextField(
+                onChanged: changed,
+                controller: controller,
+                decoration: InputDecoration(
+                    border: InputBorder.none, hintText: hintText),
+                obscureText: obscureText!,
+              ),
+            ),
+            GestureDetector(
+              onTap: onTap,
+              child: obscureText
+                  ? SvgPicture.asset(
+                      'assets/icons/hide_eye.svg',
+                      height: 20,
+                      width: 20,
+                      color: Colors.black,
+                    )
+                  : SvgPicture.asset(
+                      'assets/icons/show_eye.svg',
+                      height: 20,
+                      width: 20,
+                      color: Colors.black,
+                    ),
+            ),
+          ],
+        ),
+        Container(
+          height: 1,
+          color: const Color(0xffF0F4F9),
+        )
+      ],
+    );
+  }
+
   static Widget noData() {
     return Center(
         child: Column(

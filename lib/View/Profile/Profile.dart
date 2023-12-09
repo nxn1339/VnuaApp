@@ -130,7 +130,10 @@ class Profile extends StatelessWidget {
                 Navigation.navigateTo(page: 'MailBox');
               })
             : Container(),
-        cardItem(const Icon(Icons.key), 'Đổi mật khẩu', () {}),
+        cardItem(const Icon(Icons.key), 'Đổi mật khẩu', () {
+          Navigation.navigateTo(
+              page: 'ChangePassword', arguments: {'uuid': controller.uuid});
+        }),
         cardItem(const Icon(Icons.error_outline), 'Thông tin ứng dụng', () {}),
         cardItem(const Icon(Icons.logout), 'Đăng xuất', () {
           Utils.showDialog(

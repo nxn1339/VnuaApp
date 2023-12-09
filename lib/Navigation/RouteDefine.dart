@@ -1,3 +1,4 @@
+import 'package:agriculture/View/Quizze/ResultQuestion.dart';
 import 'package:agriculture/View/Home/Dashboard.dart';
 import 'package:agriculture/View/Home/Field.dart';
 import 'package:agriculture/View/Home/FieldDetail.dart';
@@ -5,6 +6,7 @@ import 'package:agriculture/View/Home/Home.dart';
 import 'package:agriculture/View/Login/Login.dart';
 import 'package:agriculture/View/News/NewAll.dart';
 import 'package:agriculture/View/News/NewDetail.dart';
+import 'package:agriculture/View/Profile/ChangePassword.dart';
 import 'package:agriculture/View/Profile/MailBox.dart';
 import 'package:agriculture/View/Profile/MailBoxDetail.dart';
 import 'package:agriculture/View/Profile/ProfileDetail.dart';
@@ -41,6 +43,10 @@ class RouteDefine {
         return Field();
       case 'FieldDetail':
         return FieldDetail();
+      case 'ChangePassword':
+        return ChangePassword();
+      case 'ResultQuestion':
+        return ResultQuestion();
     }
   }
 }

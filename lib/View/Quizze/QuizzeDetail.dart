@@ -14,88 +14,92 @@ class QuizzeDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          Get.arguments['title'],
-          style: const TextStyle(color: Colors.black),
+        title: Obx(
+          () => Text(
+            controller.title.value,
+            style: const TextStyle(color: Colors.black),
+          ),
         ),
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Obx(
-        () => controller.isLoading.value == true
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Wrap(
-                              direction: Axis.horizontal,
-                              spacing: 5,
-                              runSpacing: 5,
-                              children: List.generate(
-                                  controller.listQuestionAnswer.length,
-                                  (index) => GestureDetector(
-                                      onTap: () {
-                                        controller.selectQuest.value = index;
-                                      },
-                                      child: numberQuestion(index))),
-                            ),
-                            Text(
-                              '${controller.listQuestion[controller.selectQuest.value].content}',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: UtilColor.textBlue),
-                              textAlign: TextAlign.center,
-                            ),
-                            GridView.count(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 8.0,
-                              mainAxisSpacing: 8.0,
-                              padding: const EdgeInsets.all(8.0),
-                              // List of widgets to be displayed in the grid
-                              children: List.generate(
-                                  controller
-                                          .listQuestion[
-                                              controller.selectQuest.value]
-                                          .answer
-                                          ?.length ??
-                                      0, (index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    controller.selectAnswer(index);
+      body: Container(
+        child: Obx(
+          () => controller.isLoading.value == true
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Container(
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Wrap(
+                                direction: Axis.horizontal,
+                                spacing: 5,
+                                runSpacing: 5,
+                                children: List.generate(
+                                    controller.listQuestionAnswer.length,
+                                    (index) => GestureDetector(
+                                        onTap: () {
+                                          controller.selectQuest.value = index;
+                                        },
+                                        child: numberQuestion(index))),
+                              ),
+                              Text(
+                                '${controller.listQuestion[controller.selectQuest.value].content}',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: UtilColor.textBlue),
+                                textAlign: TextAlign.center,
+                              ),
+                              GridView.count(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 8.0,
+                                mainAxisSpacing: 8.0,
+                                padding: const EdgeInsets.all(8.0),
+                                // List of widgets to be displayed in the grid
+                                children: List.generate(
+                                    controller
+                                            .listQuestion[
+                                                controller.selectQuest.value]
+                                            .answer
+                                            ?.length ??
+                                        0, (index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      controller.selectAnswer(index);
+                                    },
+                                    child: cardAnswer(
+                                        controller
+                                            .listQuestion[
+                                                controller.selectQuest.value]
+                                            .answer![index],
+                                        index),
+                                  );
+                                }),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    controller.nextQuest();
                                   },
-                                  child: cardAnswer(
-                                      controller
-                                          .listQuestion[
-                                              controller.selectQuest.value]
-                                          .answer![index],
-                                      index),
-                                );
-                              }),
-                            ),
-                            ElevatedButton(
-                                onPressed: () {
-                                  controller.nextQuest();
-                                },
-                                child: const Text('Tiếp')),
-                          ],
+                                  child: const Text('Tiếp')),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }

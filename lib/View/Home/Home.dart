@@ -439,9 +439,6 @@ class Home extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         color: UtilColor.textRed),
                   )),
-              const SizedBox(
-                height: 20,
-              ),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
