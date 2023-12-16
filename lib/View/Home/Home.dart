@@ -1,4 +1,5 @@
 import 'package:agriculture/Components/New.dart';
+import 'package:agriculture/Controller/Home/DashboardController.dart';
 import 'package:agriculture/Controller/Home/HomeController.dart';
 import 'package:agriculture/Model/MDSlide.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
@@ -109,33 +110,36 @@ class Home extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _menu(
-                                  'assets/icons/graduation_cap.svg',
-                                  'Trắc nghiệm',
-                                  const Color(0xff1560BD),
-                                  () {}),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              _menu('assets/icons/mail.svg', 'Gửi tư vấn',
-                                  const Color(0xffD24B66), () {
-                                _showBottomDialog(context);
-                              }),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              _menu(
-                                'assets/icons/majors.svg',
-                                'Ngành đào tạo',
-                                const Color(0xff00CAB1),
-                                () {
-                                  Navigation.navigateTo(page: 'Field');
-                                },
-                              )
-                            ],
+                          child: IntrinsicHeight(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _menu('assets/icons/graduation_cap.svg',
+                                    'Trắc nghiệm', const Color(0xff1560BD), () {
+                                  Get.find<DashboardController>()
+                                      .selectedIndex
+                                      .value = 1;
+                                }),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                _menu('assets/icons/mail.svg', 'Đặt câu hỏi ?',
+                                    const Color(0xffD24B66), () {
+                                  _showBottomDialog(context);
+                                }),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                _menu(
+                                  'assets/icons/majors.svg',
+                                  'Ngành đào tạo',
+                                  const Color(0xff00CAB1),
+                                  () {
+                                    Navigation.navigateTo(page: 'Field');
+                                  },
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(

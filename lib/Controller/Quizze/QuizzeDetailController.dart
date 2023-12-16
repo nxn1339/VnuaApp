@@ -49,9 +49,6 @@ class QuizzeDetailController extends GetxController {
       var response = await APICaller.getInstance().post('package/$id', body);
       if (response != null) {
         resultQuestion = MDResultQuestion.fromJson(response['data']);
-        print(response['data']);
-        print(resultQuestion.result?.content);
-        print(listIDAnswer);
         Navigation.navigateTo(
             page: 'ResultQuestion',
             arguments: {'resultQuestion': resultQuestion});

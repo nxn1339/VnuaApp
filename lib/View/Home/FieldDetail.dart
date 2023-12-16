@@ -1,5 +1,6 @@
 import 'package:agriculture/Controller/Home/FieldDetailController.dart';
 import 'package:agriculture/Model/MDField.dart';
+import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/Utils/UtilColor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,16 @@ class FieldDetail extends StatelessWidget {
         automaticallyImplyLeading: true,
         backgroundColor: Colors.white,
         elevation: 0.5,
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 50),
+        child: FloatingActionButton(
+          mini: true,
+          onPressed: () {
+            Navigation.navigateGetOffAll(page: 'Dashboard');
+          },
+          child: Icon(Icons.home),
+        ),
       ),
       body: Container(
         width: size.width,

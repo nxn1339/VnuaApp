@@ -1,12 +1,14 @@
+import 'package:agriculture/Model/MDField.dart';
+
 class MDResultQuestion {
-  Base? base1;
+  Base? base;
   Result? result;
   List<Field>? field;
 
-  MDResultQuestion({this.base1, this.result, this.field});
+  MDResultQuestion({this.base, this.result, this.field});
 
   MDResultQuestion.fromJson(Map<String, dynamic> json) {
-    base1 = json['base'] != null ? new Base.fromJson(json['base']) : null;
+    base = json['base'] != null ? new Base.fromJson(json['base']) : null;
     result =
         json['result'] != null ? new Result.fromJson(json['result']) : null;
     if (json['field'] != null) {
@@ -19,8 +21,8 @@ class MDResultQuestion {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.base1 != null) {
-      data['base'] = this.base1!.toJson();
+    if (this.base != null) {
+      data['base'] = this.base!.toJson();
     }
     if (this.result != null) {
       data['result'] = this.result!.toJson();
@@ -105,18 +107,28 @@ class Result {
 class Field {
   String? id;
   String? name;
+  List<Specialized>? specialized;
 
-  Field({this.id, this.name});
+  Field({this.id, this.name, this.specialized});
 
   Field.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    if (json['specialized'] != null) {
+      specialized = <Specialized>[];
+      json['specialized'].forEach((v) {
+        specialized!.add(new Specialized.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
+    if (this.specialized != null) {
+      data['specialized'] = this.specialized!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

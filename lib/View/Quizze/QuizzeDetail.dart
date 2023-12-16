@@ -140,7 +140,9 @@ class QuizzeDetail extends StatelessWidget {
           style: TextStyle(
               color: controller.selectQuest.value == index
                   ? UtilColor.textRed
-                  : Colors.black,
+                  : controller.listQuestionAnswer[index] != 0
+                      ? Colors.white
+                      : Colors.black,
               fontWeight: FontWeight.w500),
         ),
       ),
