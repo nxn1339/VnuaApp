@@ -22,6 +22,7 @@ class FieldDetail extends StatelessWidget {
         ),
         automaticallyImplyLeading: true,
         backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         elevation: 0.5,
       ),
       floatingActionButton: Padding(
