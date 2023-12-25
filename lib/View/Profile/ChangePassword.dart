@@ -6,8 +6,10 @@ import 'package:get/get.dart';
 
 class ChangePassword extends StatelessWidget {
   ChangePassword({super.key});
+
   final delete = Get.delete<ChangePasswordController>();
   final controller = Get.put(ChangePasswordController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +21,7 @@ class ChangePassword extends StatelessWidget {
         ),
         automaticallyImplyLeading: true,
         backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: Obx(
@@ -51,6 +54,10 @@ class ChangePassword extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: UtilColor.textRed),
                     ),
+                    Container(
+                      height: 1,
+                      color: Colors.black12,
+                    ),
                     SizedBox(
                       height: 10,
                     ),
@@ -74,6 +81,10 @@ class ChangePassword extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: UtilColor.textRed),
                     ),
+                    Container(
+                      height: 1,
+                      color: Colors.black12,
+                    ),
                     SizedBox(
                       height: 10,
                     ),
@@ -96,6 +107,10 @@ class ChangePassword extends StatelessWidget {
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: UtilColor.textRed),
+                    ),
+                    Container(
+                      height: 1,
+                      color: Colors.black12,
                     ),
                     SizedBox(
                       height: 20,

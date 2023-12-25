@@ -108,7 +108,7 @@ class QuizzeDetail extends StatelessWidget {
     return Card(
       color: controller.listQuestionAnswer[controller.selectQuest.value] !=
               index + 1
-          ? Colors.white
+          ? Colors.white70
           : UtilColor.buttonBlue,
       child: Container(
         padding: EdgeInsets.all(8.0),

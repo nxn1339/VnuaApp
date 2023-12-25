@@ -1,5 +1,8 @@
+import 'package:agriculture/Service/APICaller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:agriculture/Utils/Utils.dart';
 
 class ChangePasswordController extends GetxController {
   RxBool isHidePassOld = true.obs;
@@ -24,6 +27,7 @@ class ChangePasswordController extends GetxController {
   void checkChangePass() {
     if (oldPass.text.trim() != '' && newPass.text.trim() != '') {
       if (newPass.text.trim() == againPass.text.trim()) {
+        changePass();
         isCheckValidate = true;
       } else {
         againPassValidate.value = 'Mật khẩu không giống nhau !';
@@ -42,6 +46,19 @@ class ChangePasswordController extends GetxController {
         newPassValidate.value = '';
       }
     }
+  }
+
+  void changePass() async {
+    var body = {"password": newPass.text};
+    try {
+      var response = APICaller.getInstance()
+          .put('user/change_password/${await Utils.getStringValueWithKey('id')}', body);
+      if(response!=null){
+        Get.back();
+        Utils.showSnackBar(title: 'Thông báo', message: 'Đổi mật khẩu thành công !');
+
+      }
+    } catch (e) {}
   }
 
   void resetValidate() {

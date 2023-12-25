@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 class MailBox extends StatelessWidget {
   MailBox({super.key});
+
   var delete = Get.delete<MailBoxController>();
   final controller = Get.put(MailBoxController());
   Size size = Size(0, 0);
@@ -71,38 +72,44 @@ class MailBox extends StatelessWidget {
 
   Widget cardAdvise(MDAdvise advise) {
     return Container(
-      color: advise.isReaded == 0 ? Colors.grey[200] : Colors.white,
+      color: advise.isReaded == 0 ? Colors.amber : Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Tên: ${advise.name}',
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w600),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Tên: ${advise.name}',
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'SĐT: ${advise.phone}',
+                      style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'Ngày Gửi: ${DateFormat('HH:mm  dd-MM-yyyy').format(DateTime.parse(advise.createAt.toString()))}',
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  'SĐT: ${advise.phone}',
-                  style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.red),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  'Ngày Gửi: ${DateFormat('HH:mm  dd-MM-yyyy').format(DateTime.parse(advise.createAt.toString()))}',
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w500),
-                ),
+                advise.isReaded == 0 ?unRead():read(),
               ],
             ),
           ),
@@ -111,6 +118,28 @@ class MailBox extends StatelessWidget {
             color: Colors.black12,
           )
         ],
+      ),
+    );
+  }
+
+  Widget read() {
+    return Container(
+      padding: EdgeInsets.all(6),
+      decoration: BoxDecoration(color: Colors.blue,borderRadius: BorderRadius.all(Radius.circular(8))),
+      child: Text(
+        'Đã đọc',
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+  Widget unRead() {
+    return Container(
+      padding: EdgeInsets.all(6),
+      decoration: BoxDecoration(color: Colors.red,borderRadius: BorderRadius.all(Radius.circular(8))),
+      child: Text(
+        'Chưa đọc',
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
