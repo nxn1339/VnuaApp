@@ -49,14 +49,15 @@ class ChangePasswordController extends GetxController {
   }
 
   void changePass() async {
-    var body = {"password": newPass.text};
+    var body = {"oldPassword": oldPass.text, "password": newPass.text};
     try {
-      var response = APICaller.getInstance()
-          .put('user/change_password/${await Utils.getStringValueWithKey('id')}', body);
-      if(response!=null){
+      var response = await APICaller.getInstance().put(
+          'user/change_password/${await Utils.getStringValueWithKey('id')}',
+          body);
+      if (response != null) {
         Get.back();
-        Utils.showSnackBar(title: 'Thông báo', message: 'Đổi mật khẩu thành công !');
-
+        Utils.showSnackBar(
+            title: 'Thông báo', message: 'Đổi mật khẩu thành công !');
       }
     } catch (e) {}
   }
