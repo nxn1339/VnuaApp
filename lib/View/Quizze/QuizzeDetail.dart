@@ -1,6 +1,7 @@
 import 'package:agriculture/Controller/Quizze/QuizzeDetailController.dart';
 import 'package:agriculture/Model/Quizze/MDQuestion.dart';
 import 'package:agriculture/Utils/UtilColor.dart';
+import 'package:agriculture/Utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +31,7 @@ class QuizzeDetail extends StatelessWidget {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : Container(
+              :controller.listQuestion.isEmpty?Utils.noData(): Container(
                   width: MediaQuery.of(context).size.width,
                   color: Colors.white,
                   child: Column(

@@ -3,11 +3,13 @@ import 'package:agriculture/Service/APICaller.dart';
 import 'package:agriculture/Utils/UtilColor.dart';
 import 'package:agriculture/Utils/Utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ProfileDetail extends StatelessWidget {
   ProfileDetail({super.key});
+
   Size size = Size(0, 0);
   var delete = Get.delete<ProfileDetailController>();
   final controller = Get.put(ProfileDetailController());
@@ -114,6 +116,7 @@ class ProfileDetail extends StatelessWidget {
                             Utils.textField(
                                 icon: const Icon(Icons.abc),
                                 hintText: 'Họ tên của bạn',
+                                maxLines: 1,
                                 controller: controller.name),
                             const SizedBox(
                               height: 10,
@@ -126,6 +129,7 @@ class ProfileDetail extends StatelessWidget {
                                 controller.selectDate(context);
                               },
                               child: Utils.textField(
+                                  maxLines: 1,
                                   icon: const Icon(Icons.cake),
                                   enabled: false,
                                   style: const TextStyle(color: Colors.black),
@@ -155,8 +159,11 @@ class ProfileDetail extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w500)),
                             Utils.textField(
+                                maxLines: 1,
                                 icon: const Icon(Icons.phone),
                                 hintText: 'VD: 0987654321',
+                                textInputType: TextInputType.number,
+                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                 controller: controller.phoneNumber),
                             const SizedBox(
                               height: 10,
@@ -165,6 +172,7 @@ class ProfileDetail extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w500)),
                             Utils.textField(
+                                maxLines: 1,
                                 icon: const Icon(Icons.mail),
                                 hintText: 'VD: abc@gmail.com',
                                 style: const TextStyle(color: Colors.black38),
@@ -190,16 +198,16 @@ class ProfileDetail extends StatelessWidget {
   Widget radioButton(String title, int value) {
     return Row(
       children: [
-        Text(
-          title,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
         Radio(
           value: value,
           groupValue: controller.idGender.value,
           onChanged: (value) {
             controller.setGender(value!);
           },
+        ),
+        Text(
+          title,
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
       ],
     );
