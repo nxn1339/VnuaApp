@@ -57,7 +57,7 @@ class ProfileDetailController extends GetxController {
   Future<void> selectDate(BuildContext context) async {
     pickData = await showDatePicker(
       context: context,
-      initialDate: DateTime.parse(birthDay),
+      initialDate: birthDay!=''? DateTime.parse(birthDay):DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(2200),
     );
@@ -71,7 +71,7 @@ class ProfileDetailController extends GetxController {
     await postImage();
     var body = {
       "name": name.text,
-      "avatar": linkImage,
+      "avatar": linkImage!=''?linkImage:avt.value,
       "gender": idGender.value,
       "birth_day": DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(pickData!),
       "phone": phoneNumber.text
