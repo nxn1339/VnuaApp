@@ -78,10 +78,9 @@ class ResultQuestion extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(
-                            'Nhóm: ${controller.resultQuestion.value.result?.id}'),
-                        Text(
-                            '${controller.resultQuestion.value.result?.content}'),
+                        Html(
+                            data:
+                                '${controller.resultQuestion.value.result?.content}'),
                         Html(
                             data:
                                 '${controller.resultQuestion.value.result?.content}'),

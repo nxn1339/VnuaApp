@@ -3,6 +3,7 @@ import 'package:agriculture/Model/Quizze/MDResultQuestion.dart';
 import 'package:agriculture/Navigation/Navigation.dart';
 import 'package:agriculture/Service/APICaller.dart';
 import 'package:agriculture/Utils/Utils.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class QuizzeDetailController extends GetxController {
@@ -48,10 +49,25 @@ class QuizzeDetailController extends GetxController {
     try {
       var response = await APICaller.getInstance().post('package/$id', body);
       if (response != null) {
-        resultQuestion = MDResultQuestion.fromJson(response['data']);
-        Navigation.navigateTo(
-            page: 'ResultQuestion',
-            arguments: {'resultQuestion': resultQuestion});
+        Utils.showDialog(
+            title: 'Nộp kết quả',
+            content: Text('Bạn có muốn nộp kết quả này không'),
+            onCancel: () {},
+            onConfirm: () {
+              Get.back();
+              bool allNonZero =
+                  listQuestionAnswer.every((element) => element != 0);
+
+              if (allNonZero) {
+                resultQuestion = MDResultQuestion.fromJson(response['data']);
+                Navigation.navigateTo(
+                    page: 'ResultQuestion',
+                    arguments: {'resultQuestion': resultQuestion});
+              } else {
+                Utils.showSnackBar(
+                    title: 'Thông Báo', message: 'Chưa trả lời hết câu hỏi');
+              }
+            });
       }
     } catch (e) {}
   }
@@ -66,14 +82,6 @@ class QuizzeDetailController extends GetxController {
   void nextQuest() {
     if (selectQuest.value < listQuestionAnswer.length - 1) {
       selectQuest++;
-    } else {
-      bool allNonZero = listQuestionAnswer.every((element) => element != 0);
-      if (allNonZero) {
-        resultTest();
-      } else {
-        Utils.showSnackBar(
-            title: 'Thông Báo', message: 'Chưa trả lời hết câu hỏi');
-      }
     }
   }
 }
